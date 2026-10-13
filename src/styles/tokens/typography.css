@@ -1,0 +1,39 @@
+:root{
+  --font-display:Lato,"Helvetica Neue",Arial,sans-serif;
+  --font-text:Lato,"Helvetica Neue",Arial,sans-serif;
+  --font-mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+
+  --weight-regular:400;
+  --weight-medium:500;
+  --weight-semibold:600;
+  --weight-bold:700;
+
+  /* Display scale — General Sans, tight tracking, used for editorial statements */
+  --text-display-1:clamp(56px,7.2vw,104px);
+  --text-display-2:clamp(44px,5.2vw,76px);
+  --text-display-3:clamp(36px,3.8vw,56px);
+  --text-headline:clamp(28px,2.6vw,40px);
+  --text-title:24px;
+  --text-subtitle:20px;
+
+  /* Body scale — Inter */
+  --text-lead:20px;
+  --text-body-lg:18px;
+  --text-body:16px;
+  --text-body-sm:14px;
+  --text-caption:13px;
+  --text-micro:11px;
+
+  --leading-display:0.98; /* @kind other */
+  --leading-headline:1.1; /* @kind other */
+  --leading-title:1.25; /* @kind other */
+  --leading-body:1.6; /* @kind other */
+  --leading-relaxed:1.75; /* @kind other */
+
+  --tracking-display:-0.035em; /* @kind other */
+  --tracking-headline:-0.02em; /* @kind other */
+  --tracking-title:-0.01em; /* @kind other */
+  --tracking-body:0em; /* @kind other */
+  --tracking-label:0.14em; /* @kind other */   /* eyebrows, badges: uppercase + wide */
+  --tracking-wordmark:0.24em; /* @kind other */ /* CUBEZIX lockup */
+}

@@ -1,0 +1,13 @@
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--surface-page);color:var(--text-body);font-family:var(--font-text);font-size:var(--text-body);line-height:var(--leading-body);-webkit-font-smoothing:antialiased;text-wrap:pretty}
+h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-strong);letter-spacing:var(--tracking-headline);line-height:var(--leading-headline);margin:0;font-weight:var(--weight-semibold)}
+p{margin:0}
+a{color:var(--text-accent);text-decoration:none;transition:color var(--dur-fast) var(--ease-standard),opacity var(--dur-fast) var(--ease-standard)}
+a:hover{color:#1D4FD8}
+:focus-visible{outline:none;box-shadow:var(--ring-focus);border-radius:var(--radius-sm)}
+.cz-container{max-width:var(--container-max);margin:0 auto;padding:0 var(--container-pad)}
+.cz-tabular{font-variant-numeric:tabular-nums}
+@media (max-width:720px){.cz-container{padding:0 var(--container-pad-mobile)}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+button,input,textarea,select{font-family:inherit}

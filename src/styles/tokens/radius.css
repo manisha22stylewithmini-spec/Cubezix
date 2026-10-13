@@ -1,0 +1,10 @@
+:root{
+  --radius-xs:4px;
+  --radius-sm:8px;
+  --radius-md:12px;
+  --radius-lg:16px;
+  --radius-card:24px;   /* canonical card radius */
+  --radius-xl:32px;
+  --radius-pill:999px;  /* all buttons and badges */
+  --radius-circle:50%;
+}

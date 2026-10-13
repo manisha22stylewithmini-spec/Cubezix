@@ -1,0 +1,73 @@
+:root{
+  /* Brand base — values taken verbatim from the CubeZix logo variation sheet */
+  --cz-electric-blue:#2563FF;
+  --cz-cyan-blue:#00DAFF;
+  --cz-deep-blue:#0A1B44;
+  --cz-indigo:#4F46E5;
+
+  /* Neutral base */
+  --cz-dark-navy:#0B1220;
+  --cz-slate:#1E293B;
+  --cz-cool-gray:#64748B;
+  --cz-light-gray:#E2E8F0;
+  --cz-white:#FFFFFF;
+
+  /* Extended neutral ramp, interpolated between the brand neutrals */
+  --cz-gray-25:#FBFCFD;
+  --cz-gray-50:#F6F8FB;
+  --cz-gray-100:#EFF2F7;
+  --cz-gray-200:#E5E7EB;
+  --cz-gray-300:#CBD3DF;
+  --cz-gray-400:#94A3B8;
+  --cz-gray-500:#64748B;
+  --cz-gray-600:#475569;
+  --cz-gray-700:#334155;
+  --cz-gray-800:#1E293B;
+  --cz-gray-900:#0F172A;
+  --cz-gray-950:#0B1220;
+
+  /* Semantic status */
+  --cz-success:#12B981;
+  --cz-warning:#F59E0B;
+  --cz-danger:#EF4444;
+  --cz-info:var(--cz-cyan-blue);
+
+  /* Text */
+  --text-strong:var(--cz-gray-950);
+  --text-body:var(--cz-gray-700);
+  --text-muted:var(--cz-cool-gray);
+  --text-faint:var(--cz-gray-400);
+  --text-accent:var(--cz-electric-blue);
+  --text-inverse:var(--cz-white);
+  --text-inverse-muted:#9FB0C9;
+
+  /* Surfaces */
+  --surface-page:var(--cz-white);
+  --surface-subtle:var(--cz-gray-50);
+  --surface-card:var(--cz-white);
+  --surface-sunken:var(--cz-gray-100);
+  --surface-inverse:var(--cz-dark-navy);
+  --surface-inverse-card:#111A2E;
+  --surface-inverse-sunken:#080E19;
+
+  /* Borders */
+  --border-hairline:var(--cz-gray-200);
+  --border-strong:var(--cz-gray-300);
+  --border-inverse:rgba(255,255,255,.10);
+  --border-inverse-strong:rgba(255,255,255,.18);
+  --border-accent:rgba(37,99,255,.38);
+
+  /* Accent washes */
+  --accent-wash:rgba(37,99,255,.06);
+  --accent-wash-strong:rgba(37,99,255,.12);
+  --cyan-wash:rgba(0,218,255,.10);
+
+  /* Gradients — brand primary is the 3-stop logo gradient */
+  --gradient-brand:linear-gradient(90deg,#2563FF 0%,#00DAFF 50%,#4F46E5 100%); /* @kind color */
+  --gradient-brand-diagonal:linear-gradient(135deg,#2563FF 0%,#00DAFF 52%,#4F46E5 100%); /* @kind color */
+  --gradient-mark:linear-gradient(140deg,#00DAFF 0%,#2563FF 55%,#4F46E5 100%); /* @kind color */
+  --gradient-hairline:linear-gradient(90deg,transparent,rgba(37,99,255,.45),transparent); /* @kind color */
+  --gradient-night:radial-gradient(120% 90% at 15% 0%,#12244E 0%,#0B1220 55%,#080E19 100%); /* @kind color */
+  --gradient-glow:radial-gradient(60% 60% at 50% 0%,rgba(0,218,255,.18),transparent 70%); /* @kind color */
+  --gradient-protect-bottom:linear-gradient(180deg,transparent,rgba(11,18,32,.92)); /* @kind color */
+}
