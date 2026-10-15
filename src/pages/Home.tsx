@@ -3,6 +3,7 @@ import Icon from '../components/Icon'
 import Integrations from '../components/Integrations'
 import HowWeWork from '../components/HowWeWork'
 import FlowHero from '../components/FlowHero'
+import HQJourney from '../components/nova/HQJourney'
 import FeatureCards from '../components/sections/FeatureCards'
 import ServicesBento from '../components/sections/ServicesBento'
 import Testimonials from '../components/sections/Testimonials'
@@ -14,7 +15,8 @@ import Eyebrow from '../components/Eyebrow'
 export default function Home() {
   return (
     <>
-      <FlowHero />
+      <HQJourney />
+      <FlowHero hero={false} />
       <Partners />
       <FeatureCards />
       <Integrations />

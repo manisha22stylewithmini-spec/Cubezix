@@ -350,7 +350,7 @@ function Step({ n, flip, scene, node, wide, children }: { n: number; flip?: bool
 
 
 /* ---------- component ---------- */
-export default function FlowHero() {
+export default function FlowHero({ hero = true }: { hero?: boolean }) {
   const copy = HERO
 
   const flow = useRef<HTMLDivElement>(null)
@@ -450,10 +450,22 @@ export default function FlowHero() {
       // hub badge bottom sits at stage y=646 of 700, so start the pipe right under it (above this container)
       const stageEl = document.querySelector<HTMLElement>('.fh-stage')
       const sc = stageEl ? parseFloat(getComputedStyle(stageEl).getPropertyValue('--s')) || 1 : 1
-      const startY = -54 * sc
+      let startY = -54 * sc
+      let sx = cx
+      // without its own hero, the pipe picks up from the CubeZix logo where the HQ tour above ends
+      const hqf = hero ? null : document.querySelector<HTMLElement>('.hq-frame')
+      if (hqf) {
+        const cs = getComputedStyle(hqf)
+        const fpx = parseFloat(cs.getPropertyValue('--px'))
+        const fpy = parseFloat(cs.getPropertyValue('--py'))
+        if (fpx && fpy) {
+          sx = fpx * W
+          startY = -(hqf.clientHeight - fpy) + 30
+        }
+      }
       const P: Pt[] = mob
-        ? [[cx, startY], [cx, y0], [L, y0], [L, b3], [cx, b3], [cx, kpiTop]]
-        : [[cx, startY], [cx, y0], [L, y0], [L, b1], [R, b1], [R, b2], [L, b2], [L, b3], [cx, b3], [cx, kpiTop]]
+        ? [[sx, startY], [sx, y0], [L, y0], [L, b3], [cx, b3], [cx, kpiTop]]
+        : [[sx, startY], [sx, y0], [L, y0], [L, b1], [R, b1], [R, b2], [L, b2], [L, b3], [cx, b3], [cx, kpiTop]]
       const d = rounded(P, 70)
       ;[p0, p1, p2].forEach((p) => p.setAttribute('d', d))
       total = p2.getTotalLength()
@@ -491,8 +503,8 @@ export default function FlowHero() {
   }, [])
 
   return (
-    <div className="fh">
-      <section className="fh-hero">
+    <div className={`fh${hero ? "" : " fh-nohero"}`}>
+      {hero && <section className="fh-hero">
         <Network />
         <div className="fh-hero-in">
           <Link to="/about" className="fh-new">
@@ -522,7 +534,7 @@ export default function FlowHero() {
             {copy.note}
           </p>
         </div>
-      </section>
+      </section>}
 
       <div className="fh-flow" ref={flow}>
         <svg className="fh-pipe" ref={svg} aria-hidden>

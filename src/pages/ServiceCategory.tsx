@@ -5,6 +5,10 @@ import Eyebrow from '../components/Eyebrow'
 import ContactSection from '../components/sections/ContactSection'
 import { categoryBySlug, type Service } from '../data/services'
 import Placeholder from './Placeholder'
+import GlassFolder, { type ArtPreset } from '../components/ui/glass-folder-cards'
+
+const FOLDER_W = 260
+const FOLDER_ART: ArtPreset[] = ['aurora', 'ember', 'dusk', 'verdant']
 
 const toContact = () => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 const toServices = () => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -160,19 +164,34 @@ export default function ServiceCategory({ slug }: { slug: string }) {
               <span className="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-[13px] font-semibold text-white/90">Why CubeZix</span>
               <h2 className="m-0 mt-5 text-[32px] font-bold leading-[1.12] tracking-tight text-white sm:text-[42px]">{c.blocksTitle}</h2>
             </motion.div>
-            <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-14 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
               {c.blocks.map(({ icon: Icon, title, text }, i) => (
                 <motion.div
                   key={title}
-                  className="rounded-[24px] border border-white/12 bg-white/[0.06] p-6 backdrop-blur-sm transition-colors duration-300 hover:bg-white/[0.11]"
+                  className="flex flex-col items-center"
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ duration: 0.6, delay: i * 0.09, ease }}
                 >
-                  <span className="flex size-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#3b82ff] to-[#6366f1] text-white shadow-lg shadow-blue-900/40"><Icon size={22} /></span>
-                  <h3 className="m-0 mt-5 text-[19px] font-semibold tracking-tight text-white">{title}</h3>
-                  <p className="m-0 mt-2 text-[14.5px] leading-relaxed text-white/70">{text}</p>
+                  <GlassFolder
+                    width={FOLDER_W}
+                    tone="dark"
+                    art={FOLDER_ART[i % FOLDER_ART.length]}
+                    seed={11 + i * 7}
+                    action="none"
+                    appearDelay={i * 120}
+                    label={title}
+                    meta={`0${i + 1} / 0${c.blocks.length}`}
+                    files={[
+                      { name: c.label, meta: 'CubeZix', art: FOLDER_ART[(i + 1) % FOLDER_ART.length] },
+                      { name: title, meta: `Step 0${i + 1}` },
+                    ]}
+                  />
+                  <div className="mt-3 flex max-w-[260px] flex-col items-start">
+                    <span className="flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#3b82ff] to-[#6366f1] text-white shadow-lg shadow-blue-900/40"><Icon size={18} /></span>
+                    <p className="m-0 mt-3 text-[14.5px] leading-relaxed text-white/70">{text}</p>
+                  </div>
                 </motion.div>
               ))}
             </div>

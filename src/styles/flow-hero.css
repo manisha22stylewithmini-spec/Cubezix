@@ -355,3 +355,6 @@
 .mdx-face { position: relative; width: 100%; height: 100%; }
 .mdx-face img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; user-select: none; pointer-events: none; }
 .mdx-face-head { transition: transform 0.18s cubic-bezier(0.2, 0.7, 0.3, 1); will-change: transform; }
+
+/* Home Nova: no hero of its own, so the steps' tinted background melts out of the white HQ tour above */
+.fh-nohero .fh-flow::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 220px; z-index: 0; pointer-events: none; background: linear-gradient(180deg, #fafafa 0%, rgba(250, 250, 250, 0.85) 35%, rgba(245, 246, 250, 0) 100%); }

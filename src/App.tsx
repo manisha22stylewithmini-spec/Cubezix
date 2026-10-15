@@ -18,6 +18,7 @@ export default function App() {
     <Routes>
       <Route element={<Layout />}>
         <Route index element={<Home />} />
+        <Route path="home-nova" element={<Navigate to="/" replace />} />
         <Route path="services" element={<ServicesIndex />} />
         {CATEGORIES.map((c) => <Route key={c.slug} path={`services/${c.slug}`} element={<ServiceCategory slug={c.slug} />} />)}
         {/* older URLs */}
