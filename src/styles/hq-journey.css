@@ -1,7 +1,14 @@
 /* CubeZix HQ tour (Home Nova hero): a pinned stage under the header, stations on one big ring */
 .hq { position: relative; font-family: Lato, sans-serif; background: #fafafa; }
 .hq-frame { --py: 80vh; --px: 0.5; --k: 1; --bgx: 0px; position: sticky; top: var(--hdr, 70px); height: calc(100vh - var(--hdr, 70px)); height: calc(100svh - var(--hdr, 70px)); overflow: hidden; background-color: #fafafa;
-  background-image: radial-gradient(#d4d8e1 1.15px, transparent 1.4px); background-size: 22px 22px; background-position: var(--bgx) 11px;
+  /* brand glow: blue in the middle of the stage, melting into white towards the edges (dots sit on top, drifting with the camera) */
+  background-image:
+    radial-gradient(rgba(40, 70, 160, 0.2) 1.15px, transparent 1.4px),
+    radial-gradient(ellipse 66% 62% at 50% 48%, rgba(37, 99, 255, 0.34) 0%, rgba(24, 150, 245, 0.24) 34%, rgba(70, 60, 235, 0.1) 62%, rgba(255, 255, 255, 0) 100%),
+    radial-gradient(ellipse 52% 40% at 50% 6%, rgba(18, 165, 245, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
+  background-size: 22px 22px, 100% 100%, 100% 100%;
+  background-position: var(--bgx) 11px, 0 0, 0 0;
+  background-repeat: repeat, no-repeat, no-repeat;
   perspective: 1600px; perspective-origin: calc(var(--px) * 100%) var(--oy, 26%); }
 .hq-frame::after { content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 4; background: linear-gradient(90deg, #fafafa 0, rgba(250, 250, 250, 0) 4%, rgba(250, 250, 250, 0) 96%, #fafafa 100%); }
 .hq-frame::before { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 120px; z-index: 0; pointer-events: none; background: linear-gradient(180deg, rgba(250, 250, 250, 0), #fafafa 85%); }
@@ -12,14 +19,13 @@
 .hq-copy { position: absolute; z-index: 5; left: 50%; top: clamp(24px, 4vh, 44px); width: min(1000px, 92%); transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; text-align: center; opacity: calc(1 - var(--ad) * 2.6); filter: blur(calc(var(--ad) * 8px)); }
 .hq-eyebrow { display: inline-flex; align-items: center; gap: 10px; height: 34px; padding: 0 14px 0 4px; border-radius: 999px; background: #fff; border: 1px solid #c9d7fb; box-shadow: 0 6px 18px rgba(37, 99, 255, 0.08); font: 600 14px Lato, sans-serif; color: #0b1220; white-space: nowrap; }
 .hq-eyebrow-no { height: 26px; min-width: 26px; padding: 0 9px; border-radius: 999px; display: grid; place-items: center; background: linear-gradient(90deg, #2563ff, #3b5bff); color: #fff; font: 800 12px Lato, sans-serif; }
-.hq-eyebrow-ar { font: 500 13px 'Geeza Pro', 'Noto Kufi Arabic', Tahoma, sans-serif; color: #8a91a1; padding-left: 10px; border-left: 1px solid #e2e7f3; }
 .hq-eyebrow-ic { color: #4f46e5; }
-.hq-title { margin: clamp(10px, 1.6vh, 16px) 0 0; font-family: Lato, sans-serif; font-weight: 700; font-size: clamp(32px, min(4.8vw, 7.4vh), 72px); letter-spacing: -0.03em; line-height: 1.06; color: #0b1220; }
+.hq-title { margin: clamp(10px, 1.6vh, 16px) 0 0; font-family: Lato, sans-serif; font-weight: 700; font-size: calc(clamp(32px, min(4.8vw, 7.4vh), 72px) * var(--ts, 1)); letter-spacing: -0.03em; line-height: 1.06; color: #0b1220; }
 .hq-title-main { display: block; }
 .hq-title-accent { position: relative; isolation: isolate; display: inline-block; margin-top: 0.06em; padding: 0 0.3em; }
 .hq-hl { position: absolute; z-index: -1; inset: 0.08em 0 -0.02em; background: #edf1ff; border-radius: 0.22em; transform: skewX(-12deg); }
 .hq-grad { background: linear-gradient(90deg, #1795f3 0%, #2563ff 48%, #3828e1 100%); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
-.hq-copy p { margin: clamp(10px, 1.8vh, 18px) auto 0; max-width: min(540px, 46ch); font-size: clamp(14px, min(1.15vw, 2vh), 17px); line-height: 1.55; color: #4b5563; text-wrap: balance; }
+.hq-copy p { margin: clamp(10px, 1.8vh, 18px) auto 0; max-width: 46ch; font-size: calc(clamp(14px, min(1.15vw, 2vh), 17px) * var(--tsp, 1)); line-height: 1.55; color: #4b5563; text-wrap: balance; }
 
 /* ---------- the stage: a 1100 x 380 scene, scaled to fit, standing on the station column ---------- */
 .hq-ill { position: absolute; z-index: 2; left: calc(var(--px) * 100%); top: calc(var(--py) - 104px); width: 1100px; height: 380px; transform-origin: 50% 100%; transform: translate(-50%, -100%) scale(var(--k)); }
@@ -192,7 +198,7 @@
   .hq-puck-in, .hq-puck-ring { scale: 0.82; }
   .hq-copy { top: 66px; }
   .hq-eyebrow { height: 30px; font-size: 12px; gap: 8px; }
-  .hq-eyebrow-ar, .hq-hint { display: none; }
+  .hq-hint { display: none; }
   .hq-ill { top: calc(var(--py) - 64px); }
   .hq-col { top: calc(var(--py) - 64px); height: 64px; }
 }
@@ -525,7 +531,7 @@
 .db-week i { width: 100%; border-radius: 4px; background: linear-gradient(#a5c0ff, #5b8dff); transform-origin: 50% 100%; animation: hq-grow 0.7s both; }
 
 @media (max-width: 900px) {
-  .hq-title { font-size: clamp(24px, 7vw, 32px); }
+  .hq-title { font-size: calc(clamp(24px, 7vw, 32px) * var(--ts, 1)); }
 }
 @media (max-width: 900px) { .hq-ill { top: calc(var(--py) - 76px); } .hq-col { top: calc(var(--py) - 76px); height: 76px; } .hq-copy { top: 20px; } }
 .hq-art > .hq-stone { z-index: 0; }
@@ -550,3 +556,83 @@
 .hq-glc-in { position: absolute; left: 12%; right: 12%; top: 36%; bottom: 8%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; text-align: center; }
 .hq-glc-in b { font: 800 17px Lato, sans-serif; color: #0b1220; letter-spacing: -0.01em; }
 .hq-glc-in em { font: 600 12px Lato, sans-serif; font-style: normal; color: #5b6475; }
+
+/* only the first slide (the one you land on) gets the larger headline type */
+.hq-room.r-lobby .hq-copy { --ts: 1.25; --tsp: 1.15; }
+.hq-frame.hq-measure .hq-room.r-lobby .hq-copy { --ts: 1; --tsp: 1; }
+
+/* ---------- Microsoft 365 scene ---------- */
+.hq-cl .hq-cloud { top: 6px; }
+.hq-m-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.hq-m-svg .ring { fill: none; stroke: rgba(37, 99, 255, 0.2); stroke-width: 1.4; }
+.hq-m-svg .ring.r2 { stroke: rgba(18, 165, 245, 0.28); stroke-dasharray: 3 7; }
+.hq-m-svg .dot { fill: #38bdf8; filter: drop-shadow(0 0 5px rgba(37, 99, 255, 0.9)); }
+.hq-m-svg .wire { fill: none; stroke: #b9cdf6; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.hq-m-svg .pulse { fill: #2563ff; filter: drop-shadow(0 0 5px rgba(37, 99, 255, 0.8)); }
+.hq-m-logo { width: 46px; height: 46px; object-fit: contain; margin-bottom: 2px; }
+.hq-m-app { position: absolute; width: 0; height: 0; z-index: 2; outline: none; animation: hq-bob 5.5s ease-in-out infinite; animation-delay: var(--d, 0s); }
+.hq-m-tile { position: absolute; left: -36px; top: -36px; width: 72px; height: 72px; border-radius: 20px; display: grid; place-items: center; background: rgba(255, 255, 255, 0.95); box-shadow: 0 0 0 1px rgba(20, 30, 70, 0.05), 0 18px 34px -14px rgba(37, 99, 255, 0.4); transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s; }
+.hq-m-tile img { width: 38px; height: 38px; object-fit: contain; }
+.hq-m-app:hover .hq-m-tile, .hq-m-app:focus .hq-m-tile { transform: translateY(-6px) scale(1.08); box-shadow: 0 0 0 1px rgba(37, 99, 255, 0.25), 0 26px 40px -14px rgba(37, 99, 255, 0.55); }
+.hq-m-app em { position: absolute; left: 0; top: 44px; transform: translateX(-50%); padding: 4px 9px; border-radius: 8px; background: #14161f; color: #fff; font: 700 11px Lato, sans-serif; font-style: normal; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
+.hq-m-app:hover em, .hq-m-app:focus em { opacity: 1; }
+.hq-m-devs { position: absolute; left: 0; top: 288px; width: 100%; height: 96px; }
+.hq-m-dev { position: absolute; top: 0; width: 0; height: 0; }
+.hq-m-dev-in { position: absolute; left: -56px; top: 0; width: 112px; height: 88px; border-radius: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 9px; color: #2563ff; background: rgba(255, 255, 255, 0.95); box-shadow: 0 0 0 1px rgba(20, 30, 70, 0.05), 0 16px 30px -16px rgba(37, 99, 255, 0.35); transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s; }
+.hq-m-dev-in img { width: 34px; height: 24px; object-fit: contain; }
+.hq-m-dev-in b { font: 600 13px Lato, sans-serif; color: #0b1220; }
+.hq-m-dev:hover .hq-m-dev-in { transform: translateY(-4px); box-shadow: 0 0 0 1px rgba(37, 99, 255, 0.25), 0 22px 36px -16px rgba(37, 99, 255, 0.5); }
+
+/* M365 refinements: content centred in the cloud, bigger logos, a glowing base under the cloud, static device bracket */
+.hq-cl .hq-glc-in { top: 24%; bottom: 20%; gap: 6px; }
+.hq-m-logo { width: 62px; height: 62px; margin-bottom: 0; }
+.hq-cl .hq-glc-in b { font-size: 19px; }
+.hq-m-tile { left: -44px; top: -44px; width: 88px; height: 88px; border-radius: 24px; }
+.hq-m-tile img { width: 52px; height: 52px; }
+.hq-m-app em { top: 54px; }
+.hq-m-svg .ring { stroke: rgba(37, 99, 255, 0.2); }
+.hq-m-svg .wire { stroke: #5b8def; stroke-width: 1.6; }
+.hq-m-svg .end { fill: #3b74ff; }
+.hq-m-base { position: absolute; left: 50%; top: 168px; width: 420px; height: 84px; transform: translateX(-50%); z-index: 1; pointer-events: none; }
+.hq-m-base i:first-child { position: absolute; inset: 0; border-radius: 50%; border: 2px solid rgba(45, 212, 191, 0.55); background: radial-gradient(ellipse at 50% 55%, rgba(125, 190, 255, 0.35), rgba(255, 255, 255, 0) 72%); }
+.hq-m-base i:last-child { position: absolute; left: 12%; right: 12%; top: 34%; height: 52%; border-radius: 50%; background: radial-gradient(ellipse at 50% 40%, #9cc4ff, #4f8bff 70%); box-shadow: 0 0 30px 6px rgba(37, 99, 255, 0.28); opacity: 0.9; }
+.hq-m-devs { top: 292px; }
+.hq-m-dev-in { left: -60px; width: 120px; height: 90px; gap: 8px; background: rgba(255, 255, 255, 0.72); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.hq-m-dev-in img { width: 56px; height: 40px; }
+.hq-m-dev-in b { font-size: 13.5px; }
+
+/* ---------- Microsoft 365, v3: one perspective plane ---------- */
+.m3 .m3-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; z-index: 1; }
+.m3 .m3-svg.front { z-index: 3; }
+.m3-orbit { fill: none; stroke-width: 2; }
+.m3-orbit2 { fill: none; stroke: rgba(37, 99, 255, 0.16); stroke-width: 1.2; stroke-dasharray: 2 7; }
+.m3-dot { fill: #fff; stroke: #2563ff; stroke-width: 2.5; filter: drop-shadow(0 0 6px rgba(37, 99, 255, 0.9)); }
+.m3-ring { fill: none; stroke-width: 2.6; filter: drop-shadow(0 0 4px rgba(37, 99, 255, 0.7)) drop-shadow(0 0 12px rgba(37, 99, 255, 0.35)); }
+.m3-sweep { fill: none; stroke: #8fd3ff; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 0.16 1; stroke-dashoffset: 0.16; filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.9)); animation: m3-sweep 4.5s ease-in-out infinite; }
+@keyframes m3-sweep { 0% { stroke-dashoffset: 0.16; } 100% { stroke-dashoffset: -1; } }
+.m3-wire { fill: none; stroke: #6f97f0; stroke-width: 1.6; stroke-linecap: round; }
+.m3-end { fill: #2563ff; }
+.m3-cloud { position: absolute; left: 50%; top: 40px; transform: translateX(-50%); z-index: 2; filter: drop-shadow(0 18px 30px rgba(37, 99, 255, 0.22)); }
+.m3 .hq-glc-in { top: 30%; bottom: 14%; gap: 4px; }
+.m3 .hq-glc-in b { font-size: 18px; }
+.m3-logo { width: 54px; height: 54px; object-fit: contain; }
+.m3-app { position: absolute; width: 0; height: 0; z-index: 4; outline: none; }
+.m3-tile { position: absolute; left: -38px; top: -38px; width: 76px; height: 76px; border-radius: 22px; display: grid; place-items: center; background: rgba(255, 255, 255, 0.96); box-shadow: 0 0 0 1px rgba(20, 30, 70, 0.05), 0 16px 30px -14px rgba(37, 99, 255, 0.45); transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s; }
+.m3-tile img { width: 44px; height: 44px; object-fit: contain; }
+.m3-app:hover .m3-tile, .m3-app:focus .m3-tile { transform: translateY(-6px) scale(1.08); box-shadow: 0 0 0 2px rgba(37, 99, 255, 0.35), 0 24px 40px -14px rgba(37, 99, 255, 0.6); }
+.m3-app em { position: absolute; left: 0; top: 46px; transform: translateX(-50%); padding: 4px 9px; border-radius: 8px; background: #14161f; color: #fff; font: 700 11px Lato, sans-serif; font-style: normal; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
+.m3-app:hover em, .m3-app:focus em { opacity: 1; }
+.m3-dev { position: absolute; z-index: 2; width: 112px; height: 80px; margin-left: -56px; border-radius: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; color: #2563ff; background: rgba(255, 255, 255, 0.82); box-shadow: 0 0 0 1px rgba(20, 30, 70, 0.05), 0 14px 26px -16px rgba(37, 99, 255, 0.4); transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s; }
+.m3-dev img { width: 44px; height: 30px; object-fit: contain; }
+.m3-dev b { font: 600 12.5px Lato, sans-serif; color: #0b1220; }
+.m3-dev:hover { transform: translateY(-4px); box-shadow: 0 0 0 1px rgba(37, 99, 255, 0.25), 0 20px 32px -16px rgba(37, 99, 255, 0.5); }
+
+/* the hint follows the cursor over the active scene instead of sitting in a corner */
+.hq-hint { display: none !important; }
+.hq-cursor { position: absolute; left: 0; top: 0; z-index: 30; display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px 7px 10px; border-radius: 999px; background: #fff; color: #475467; font: 700 12.5px Lato, sans-serif; white-space: nowrap; pointer-events: none; box-shadow: 0 0 0 1px rgba(20, 30, 70, 0.06), 0 12px 26px -10px rgba(20, 30, 70, 0.3); opacity: 0; scale: 0.85; transition: opacity 0.2s, scale 0.25s cubic-bezier(0.2, 0.8, 0.2, 1); will-change: transform; }
+.hq-cursor svg { color: #2563ff; }
+.hq-cursor.on { opacity: 1; scale: 1; }
+@media (hover: none) { .hq-cursor { display: none; } }
+
+/* hover is styling only: no tooltips or detail frames anywhere in the tour */
+.m3-app em, .hq-sat-in em, .hq-feed-tip, .hq-spec { display: none !important; }

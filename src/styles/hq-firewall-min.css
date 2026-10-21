@@ -1,0 +1,70 @@
+/* Firewall station, minimal version (1100 x 380 stage). Flat white nodes, soft shadows, one accent. */
+.m-lane { fill: none; stroke: #b7ccf3; stroke-width: 2; stroke-linecap: round; }
+.m-lane.bad { stroke: #f3a1a4; stroke-dasharray: 3 7; }
+
+.m-node { position: absolute; z-index: 2; display: flex; flex-direction: column; align-items: center; }
+.m-left { left: 64px; top: 84px; }
+.m-right { right: 64px; top: 84px; }
+.m-mid { left: 50%; top: 52px; width: 200px; margin-left: -100px; z-index: 3; }
+.m-circle { position: relative; width: 132px; height: 132px; border-radius: 50%; display: grid; place-items: center; align-content: center; background: #fff; color: #2563ff; box-shadow: 0 0 0 1px rgba(20, 30, 70, 0.05), 0 22px 40px -22px rgba(37, 99, 255, 0.55); }
+.m-circle.accent { background: linear-gradient(145deg, #12a5f5, #3b1ee0); color: #fff; box-shadow: 0 22px 40px -18px rgba(37, 99, 255, 0.7); }
+.m-circle.accent b { font: 800 30px Lato, sans-serif; letter-spacing: -0.02em; line-height: 1; font-variant-numeric: tabular-nums; }
+.m-circle.accent em { margin-top: 5px; font: 600 11.5px Lato, sans-serif; font-style: normal; color: rgba(255, 255, 255, 0.85); }
+.m-circle.shield { margin-top: 12px; transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s; }
+.m-mid:hover .m-circle.shield { transform: translateY(-3px); box-shadow: 0 0 0 1px rgba(37, 99, 255, 0.18), 0 28px 48px -20px rgba(37, 99, 255, 0.7); }
+.m-shield { width: 58px; height: 66px; animation: x-pulse 2.6s ease-in-out infinite; }
+
+.m-tag { display: flex; flex-direction: column; align-items: center; gap: 2px; margin-top: 16px; text-align: center; white-space: nowrap; }
+.m-tag.top { margin: 0; }
+.m-tag b { font: 800 15px Lato, sans-serif; color: #0b1220; }
+.m-tag em { font: 600 12px Lato, sans-serif; font-style: normal; color: #667085; }
+
+/* packets: smaller, quieter */
+.x-pk.m-pk { width: 32px; height: 32px; border-radius: 10px; box-shadow: 0 0 0 1px rgba(20, 30, 70, 0.05), 0 8px 16px -8px rgba(37, 99, 255, 0.4); }
+.x-pk.m-pk.bad { width: 32px; height: 32px; border-radius: 50%; box-shadow: 0 0 0 3px rgba(229, 72, 77, 0.14), 0 0 12px rgba(229, 72, 77, 0.35); }
+.m-hit { position: absolute; left: 470px; top: 125px; z-index: 5; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; color: #fff; background: #e5484d; box-shadow: 0 0 0 4px rgba(229, 72, 77, 0.16); opacity: 0; animation: x-hit 4.5s linear infinite; }
+
+/* single status pill */
+.m-pill { position: absolute; left: 50%; bottom: 8px; transform: translateX(-50%); z-index: 3; display: inline-flex; align-items: center; gap: 14px; padding: 11px 22px; border-radius: 999px; background: rgba(255, 255, 255, 0.9); box-shadow: 0 0 0 1px rgba(20, 30, 70, 0.05), 0 16px 30px -18px rgba(37, 99, 255, 0.45); font: 700 13px Lato, sans-serif; color: #0b1220; white-space: nowrap; }
+.m-pill-ic { display: inline-flex; align-items: center; gap: 12px; color: #2563ff; }
+.m-pill-sep { width: 1px; height: 18px; background: #e3e8f2; }
+
+@media (prefers-reduced-motion: reduce) { .m-shield, .m-hit { animation: none; } }
+
+/* ---------- refinement: depth, glow and a clear "stop" moment ---------- */
+.m-lane { stroke-width: 2.6; }
+.m-lane.bad { stroke: #f08a8f; stroke-width: 2.2; stroke-dasharray: 2 8; }
+.m-glow { fill: none; stroke: rgba(56, 140, 255, 0.22); stroke-width: 10; stroke-linecap: round; filter: blur(4px); }
+.m-left { left: 56px; top: 74px; }
+.m-right { right: 56px; top: 74px; }
+.m-circle { width: 148px; height: 148px; }
+.m-circle.accent { position: relative; overflow: hidden; background: radial-gradient(circle at 30% 26%, #6cc3ff 0%, #2f7bff 42%, #2a2fd8 78%, #24139e 100%); box-shadow: inset -12px -16px 30px rgba(10, 10, 90, 0.45), inset 8px 10px 20px rgba(190, 225, 255, 0.35), 0 26px 44px -18px rgba(37, 99, 255, 0.75); }
+.m-gloss { position: absolute; left: 10%; top: 6%; width: 60%; height: 40%; border-radius: 50%; background: radial-gradient(ellipse, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0) 70%); filter: blur(8px); pointer-events: none; }
+.m-globe-ic { position: relative; margin-bottom: 4px; color: rgba(255, 255, 255, 0.75); }
+.m-circle.accent b { position: relative; font-size: 32px; text-shadow: 0 2px 10px rgba(10, 10, 80, 0.45); }
+.m-circle.accent em { position: relative; font-size: 12px; color: #fff; }
+.m-halo { position: absolute; left: 50%; top: -14px; width: 176px; height: 176px; margin-left: -88px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.1) 68%); box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.9); z-index: -1; }
+.m-halo.soft { background: radial-gradient(circle, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.05) 68%); }
+.m-floor { display: block; width: 130px; height: 18px; margin-top: 10px; border-radius: 50%; background: radial-gradient(ellipse, rgba(37, 99, 255, 0.28), rgba(37, 99, 255, 0) 70%); }
+.m-floor.wide { width: 200px; margin-top: 6px; }
+.m-left .m-floor, .m-right .m-floor { order: 2; margin-top: -6px; }
+.m-left .m-tag, .m-right .m-tag { order: 3; }
+.m-circle.office { background: linear-gradient(180deg, #ffffff, #eef3ff); }
+.m-office-ic { width: 74px; height: 74px; border-radius: 22px; display: grid; place-items: center; color: #fff; background: linear-gradient(135deg, #38bdf8, #2563ff 55%, #3b1ee0); box-shadow: 0 14px 26px -10px rgba(37, 99, 255, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.35); }
+.m-ok { position: absolute; right: 22px; top: 22px; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; color: #fff; background: #12a06e; box-shadow: 0 0 0 4px #fff, 0 6px 12px -4px rgba(18, 160, 110, 0.6); }
+.m-mid { top: 34px; width: 240px; margin-left: -120px; }
+.m-circle.shield { width: 160px; height: 160px; margin-top: 18px; background: radial-gradient(circle at 50% 40%, #ffffff 0%, #f1f6ff 60%, #dfe9ff 100%); box-shadow: inset 0 0 0 1.5px #fff, 0 0 0 10px rgba(255, 255, 255, 0.55), 0 0 44px rgba(37, 99, 255, 0.35), 0 26px 44px -20px rgba(37, 99, 255, 0.7); }
+.m-shield { width: 70px; height: 80px; filter: drop-shadow(0 10px 16px rgba(37, 99, 255, 0.5)); }
+.m-orbit { position: absolute; left: 50%; top: 34px; width: 208px; height: 208px; margin-left: -104px; border-radius: 50%; border: 1.5px dashed rgba(37, 99, 255, 0.35); animation: hq-spin 26s linear infinite; pointer-events: none; }
+.m-orbit::before { content: ''; position: absolute; left: 50%; top: -5px; width: 9px; height: 9px; margin-left: -4.5px; border-radius: 50%; background: #2563ff; box-shadow: 0 0 10px #2563ff; }
+/* red ripple on the shield's left edge, timed with each blocked threat */
+.m-ripple { position: absolute; left: 50%; top: 53px; width: 170px; height: 170px; margin-left: -85px; border-radius: 50%; border: 3px solid transparent; border-left-color: rgba(229, 72, 77, 0.85); opacity: 0; z-index: 4; pointer-events: none; animation: m-ripple 4.5s ease-out infinite; }
+@keyframes m-ripple { 0%, 70% { opacity: 0; transform: scale(0.94); } 74% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(1.18); } }
+.m-hit { left: 459px; top: 120px; }
+.x-pk.m-pk { width: 36px; height: 36px; border-radius: 12px; }
+.x-pk.m-pk.bad { width: 36px; height: 36px; }
+.m-pill { bottom: 0; padding: 10px 20px 10px 14px; gap: 14px; }
+.m-pill-ic { gap: 8px; }
+.m-pill-ic i { width: 30px; height: 30px; border-radius: 10px; display: grid; place-items: center; font-style: normal; background: #eef3ff; animation: m-tick 2.45s ease-in-out infinite; }
+@keyframes m-tick { 0%, 80%, 100% { background: #eef3ff; color: #2563ff; } 88% { background: #2563ff; color: #fff; } }
+@media (prefers-reduced-motion: reduce) { .m-orbit, .m-ripple, .m-pill-ic i { animation: none; } }

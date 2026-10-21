@@ -350,7 +350,7 @@ function Step({ n, flip, scene, node, wide, children }: { n: number; flip?: bool
 
 
 /* ---------- component ---------- */
-export default function FlowHero({ hero = true }: { hero?: boolean }) {
+export default function FlowHero({ hero = true, tail }: { hero?: boolean; tail?: React.ReactNode }) {
   const copy = HERO
 
   const flow = useRef<HTMLDivElement>(null)
@@ -431,7 +431,7 @@ export default function FlowHero({ hero = true }: { hero?: boolean }) {
       const [, b3] = rel(steps[2])
       // the pipe ends behind the "Our model" eyebrow pill (its vertical centre), never down behind the heading.
       // Measured from layout offsets so the block's reveal translate does not shift it.
-      const eb = kpi.current?.querySelector<HTMLElement>('.md-head .eb')
+      const eb = kpi.current?.querySelector<HTMLElement>('.md-head .eb') ?? kpi.current?.querySelector<HTMLElement>('.eb')
       let kpiTop = kpi.current ? rel(kpi.current)[0] + 69 : H
       if (eb) {
         let y = eb.offsetHeight / 2
@@ -551,8 +551,8 @@ export default function FlowHero({ hero = true }: { hero?: boolean }) {
             <p>{s.body}</p>
           </Step>
         ))}
-        <div className="fh-model-wrap" ref={kpi}>
-          <ModelDashboard />
+        <div className={`fh-model-wrap${tail ? ' fh-tail-wrap' : ''}`} ref={kpi}>
+          {tail ?? <ModelDashboard />}
         </div>
       </div>
     </div>

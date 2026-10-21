@@ -1,0 +1,40 @@
+/* The home hero's arc of glass service discs, reused as the hero infographic of every services page. */
+.ha { container-type: inline-size; position: relative; height: 228px; margin-top: 30px; }
+.ha-line { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.ha-line path { fill: none; stroke: #9db4ee; stroke-width: 2.5; stroke-dasharray: 2 9; stroke-linecap: round; }
+.ha-line circle { fill: #2563ff; filter: drop-shadow(0 0 6px rgba(37, 99, 255, 0.8)); }
+.ha-node {
+  position: absolute; left: calc(50% + var(--t) * 84cqw); top: calc(8px + (0.25 - var(--t) * var(--t)) * 210px);
+  width: 140px; margin-left: -70px; padding: 0; border: 0; background: none; display: flex; flex-direction: column; align-items: center; gap: 12px;
+  color: inherit; text-decoration: none; cursor: pointer; opacity: 0; animation: ha-pop 0.7s cubic-bezier(0.25, 1.4, 0.4, 1) forwards; animation-delay: calc(0.15s + var(--i) * 0.07s);
+  transition: translate 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.ha-node:hover { translate: 0 -8px; }
+.ha-node .hq-node-disc { --bs: 80px; }
+.ha-node:hover .hq-node-in { color: #fff; background: linear-gradient(135deg, #12a5f5, #2563ff 55%, #3b1ee0) border-box; }
+.ha-node .hq-node-lb { white-space: normal; max-width: 130px; font-size: 13px; }
+@keyframes ha-pop { from { opacity: 0; transform: translateY(22px) scale(0.8); } to { opacity: 1; transform: none; } }
+@media (max-width: 760px) {
+  .ha { height: auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 22px 14px; margin-top: 28px; }
+  .ha-line { display: none; }
+  .ha-node { position: static; margin: 0; width: 104px; }
+  .ha-node .hq-node-disc { --bs: 68px; }
+  .ha-node .hq-node-lb { font-size: 12px; }
+}
+
+/* floating cursor tags (IT AMC provider card) */
+.amc-float { animation: amc-float 6s ease-in-out infinite; }
+@keyframes amc-float { 0%, 100% { transform: translate(0, 0); } 33% { transform: translate(8px, -7px); } 66% { transform: translate(-6px, 5px); } }
+
+/* sector ticker: constant speed, right to left */
+.ind-track { animation: ind-run 48s linear infinite; }
+.ind-track:hover { animation-play-state: paused; }
+@keyframes ind-run { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .ind-track { animation: none; } }
+
+/* "our approach" photo: a slow drift, and the stat cards that float over it */
+.aa-pan { animation: aa-pan 24s ease-in-out infinite alternate; transform-origin: 60% 50%; }
+@keyframes aa-pan { from { transform: scale(1.03); } to { transform: scale(1.12) translateX(-1.5%); } }
+.aa-float { animation: aa-float 6s ease-in-out infinite; }
+@keyframes aa-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@media (prefers-reduced-motion: reduce) { .aa-pan, .aa-float { animation: none; } }

@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Building2, Cctv, Cloud, HardDrive, LayoutDashboard, PhoneCall, Server, Shield } from 'lucide-react'
+import { ArrowRight, MousePointer2, Building2, Cctv, Cloud, HardDrive, LayoutDashboard, PhoneCall, Server, Shield } from 'lucide-react'
 import '../../styles/hq-journey.css'
 
 /* ------------------------------------------------------------------------------------------------
@@ -11,7 +11,9 @@ import '../../styles/hq-journey.css'
 
 type Room = { id: string; tag: string; ar: string; icon: typeof Server; eyebrow: string; title: string; accent: string; line: string; art: ReactNode }
 
-import { BackupArt, CctvArt, CloudArt, ErpArt, FirewallArt, Lobby, PhoneArt, ServersArt } from './HQScenes'
+import { CloudArt, ErpArt, Lobby } from './HQScenes'
+import { CctvArt } from './HQCctv'
+import { BackupArt, FirewallArt, PhoneArt, ServersArt } from './HQScenesV2'
 
 const ROOM_META = [
   { id: 'lobby', tag: 'CubeZix HQ', ar: 'المقر الرئيسي', icon: Building2 },
@@ -29,6 +31,7 @@ const f = (n: number) => n.toFixed(1)
 
 export default function HQJourney() {
   const sec = useRef<HTMLElement>(null)
+  const cursor = useRef<HTMLSpanElement>(null)
   const frame = useRef<HTMLDivElement>(null)
   const track = useRef<HTMLDivElement>(null)
   const train = useRef<HTMLSpanElement>(null)
@@ -100,8 +103,11 @@ export default function HQJourney() {
       px = 0.5
       fr.style.setProperty('--px', String(px))
       // the artwork starts just below the tallest headline block, so text and scene never overlap
+      // the scene is placed from the headline's *base* size, so enlarging the type never moves or rescales it
+      fr.classList.add('hq-measure')
       let top = 0
       tr.querySelectorAll<HTMLElement>('.hq-copy').forEach((c) => { top = Math.max(top, c.offsetTop + c.offsetHeight) })
+      fr.classList.remove('hq-measure')
       top += mob ? 18 : 26
       const yMax = vh - Math.max(56, vh * 0.085)
       const availW = mob ? vw * 1.32 : vw * 0.94
@@ -214,7 +220,30 @@ export default function HQJourney() {
 
   return (
     <section ref={sec} className="hq" style={{ height: `${100 + (N - 1) * 95}vh` }} aria-label="CubeZix Line: a tour of our services">
-      <div className="hq-frame" ref={frame}>
+      <div
+        className="hq-frame"
+        ref={frame}
+        onPointerMove={(e) => {
+          const fr = frame.current
+          const cur = cursor.current
+          if (!fr || !cur || e.pointerType === 'touch') return
+          const room = fr.querySelector<HTMLElement>('.hq-room.on')
+          const art = room?.querySelector<HTMLElement>('.hq-ill-in')
+          const hint = room?.querySelector<HTMLElement>('.hq-hint')
+          const r = art?.getBoundingClientRect()
+          const inside = !!r && e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom
+          if (!inside || !hint) { cur.classList.remove('on'); return }
+          const f = fr.getBoundingClientRect()
+          const label = hint.textContent ?? ''
+          if (cur.dataset.t !== label) { cur.dataset.t = label; cur.querySelector('b')!.textContent = label }
+          const cw = cur.offsetWidth
+          const x = Math.min(e.clientX - f.left + 18, f.width - cw - 12)
+          cur.style.transform = `translate3d(${Math.max(12, x)}px, ${e.clientY - f.top + 20}px, 0)`
+          cur.classList.add('on')
+        }}
+        onPointerLeave={() => cursor.current?.classList.remove('on')}
+      >
+        <span className="hq-cursor" ref={cursor} aria-hidden><MousePointer2 size={13} /><b /></span>
         <svg className="hq-ringline" ref={ring} aria-hidden>
           <defs>
             <clipPath id={`hq-clip-${clipId}`}><rect ref={clip} x="0" y="0" width="0" height="4000" /></clipPath>
@@ -228,12 +257,11 @@ export default function HQJourney() {
         <span className="hq-puck" ref={train} aria-hidden><span className="hq-puck-ring" /><span className="hq-puck-in"><img src="/assets/logo-mark.png" alt="" /></span></span>
         <div className="hq-track" ref={track}>
           {rooms.map((r, i) => (
-            <article key={r.id} className={`hq-room r-${r.id}`} style={{ left: `${(i * 100) / N}%`, width: `${100 / N}%` }}>
+            <article key={r.id} data-i={i} className={`hq-room r-${r.id}`} style={{ left: `${(i * 100) / N}%`, width: `${100 / N}%` }}>
               <div className="hq-copy">
                 <span className="hq-eyebrow">
                   <span className="hq-eyebrow-no">{i === 0 ? 'HQ' : String(i).padStart(2, '0')}</span>
                   <span className="hq-eyebrow-tx">{r.eyebrow}</span>
-                  <span className="hq-eyebrow-ar" lang="ar" dir="rtl">{r.ar}</span>
                   <r.icon size={15} className="hq-eyebrow-ic" />
                 </span>
                 {(() => {

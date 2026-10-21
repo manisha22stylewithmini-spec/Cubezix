@@ -1,28 +1,24 @@
+import IndustriesMarquee from '../components/IndustriesMarquee'
 import { Link } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { ArrowRight } from 'lucide-react'
-import Eyebrow from '../components/Eyebrow'
+import ArcHero from '../components/ArcHero'
 import ContactSection from '../components/sections/ContactSection'
 import { CATEGORIES, categoryPath } from '../data/services'
 
 export default function ServicesIndex() {
   return (
     <div className="bg-white font-sans">
-      <section className="relative overflow-hidden bg-[#fafafa] px-6 pb-20 pt-20 lg:px-12">
-        <div className="pointer-events-none absolute inset-0 bg-cover bg-[position:100%_50%] bg-no-repeat opacity-80" style={{ backgroundImage: 'url(/assets/services-hero-bg.png)' }} aria-hidden />
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-[70%] bg-gradient-to-r from-[#fafafa] via-[#fafafa]/85 to-transparent" aria-hidden />
-        <div className="relative mx-auto max-w-[1280px]">
-          <Eyebrow label="Our services" note="Four service lines" />
-          <h1 className="m-0 mt-6 max-w-[16ch] text-[40px] font-extrabold leading-[1.05] tracking-[-0.035em] text-[#0b1220] sm:text-[60px]">
-            Everything your IT needs, <span className="text-[#2563ff]">under one team.</span>
-          </h1>
-          <p className="m-0 mt-6 max-w-[56ch] text-[17px] leading-relaxed text-[#5b6475]">
-            Choose a service line to see what is covered, or talk to us and we will scope a single contract across all of them.
-          </p>
-        </div>
-      </section>
+      <ArcHero
+        eyebrow="Our services" note="Four service lines"
+        title="Everything your IT needs," accent="under one team."
+        text="Choose a service line to see what is covered, or talk to us and we will scope a single contract across all of them."
+        nodes={CATEGORIES.map((c) => ({ label: c.label, icon: c.services[0].icon, to: categoryPath(c.slug) }))}
+      />
 
-      <section className="px-6 pb-24 lg:px-12">
+      <IndustriesMarquee />
+
+      <section className="px-6 pb-24 pt-16 lg:px-12">
         <div className="mx-auto grid max-w-[1280px] gap-6 md:grid-cols-2">
           {CATEGORIES.map((c, i) => (
             <motion.div

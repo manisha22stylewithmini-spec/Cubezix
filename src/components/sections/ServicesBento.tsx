@@ -8,8 +8,8 @@ const POINTS = ['One contract for support, infrastructure and cloud', 'Named eng
 
 export default function ServicesBento() {
   return (
-    <section className="relative bg-background py-24 font-sans">
-      <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 lg:grid-cols-[1.1fr_1fr] lg:gap-20">
+    <section className="relative overflow-x-clip bg-background py-24 font-sans">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-6 lg:grid-cols-[1.1fr_1fr] lg:gap-20 [&>*]:min-w-0">
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}

@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useId, useState, type ReactNode } from 'react'
 import {
   BarChart3, Briefcase, Bug, Building2, Calendar, Cctv, Check, Cloud, Cpu, Database, FileText, Globe, HardDrive,
   Headset, LayoutDashboard, Lock, Mail, Monitor, MousePointer2, Package, Phone, PhoneCall, PhoneIncoming,
@@ -12,24 +12,14 @@ import {
 ------------------------------------------------------------------------------------------------- */
 
 /* ---------- shared pieces ---------- */
-export function Spec({ title, items, side = 'right' }: { title: string; items: string[]; side?: 'left' | 'right' | 'top' }) {
-  return (
-    <span className={`hq-spec s-${side}`} role="tooltip">
-      <b>{title}</b>
-      {items.map((t) => (
-        <span key={t}><Check size={12} strokeWidth={3} />{t}</span>
-      ))}
-    </span>
-  )
-}
 const Stone = ({ w = 900 }: { w?: number }) => <span className="hq-stone" style={{ width: w }} />
 const Leds = ({ n, cls = '' }: { n: number; cls?: string }) => (
   <span className={`hq-leds ${cls}`}>{Array.from({ length: n }, (_, i) => <i key={i} style={{ animationDelay: `${(i * 0.37) % 2.2}s` }} />)}</span>
 )
-const Hint = ({ children }: { children: ReactNode }) => <span className="hq-hint"><MousePointer2 size={13} />{children}</span>
+export const Hint = ({ children }: { children: ReactNode }) => <span className="hq-hint"><MousePointer2 size={13} />{children}</span>
 
 /** A circular node that sends waves out, the same mark used for the services in the lobby. */
-function Beacon({ icon: Ic, label, tone = 'blue', size = 76 }: { icon: typeof Server; label?: string; tone?: 'blue' | 'red' | 'green'; size?: number }) {
+export function Beacon({ icon: Ic, label, tone = 'blue', size = 76 }: { icon: typeof Server; label?: string; tone?: 'blue' | 'red' | 'green'; size?: number }) {
   return (
     <span className={`hq-beacon t-${tone}`} style={{ ['--bs' as string]: `${size}px` }}>
       <span className="hq-node-disc">
@@ -46,13 +36,13 @@ function Beacon({ icon: Ic, label, tone = 'blue', size = 76 }: { icon: typeof Se
 /** A frosted-glass cloud. Something colourful sits behind the glass and shows through it:
  *  `orb` is a gradient sphere peeking over the top edge, `rain` adds data drops falling out of the bottom. */
 const CLOUD_PATH = 'M66 150C30 150 8 126 8 97C8 69 30 48 58 47C66 20 93 4 124 4C162 4 191 29 196 62C228 62 252 85 252 114C252 136 236 150 210 150Z'
-function GlassCloud({ w = 260, variant = 'orb', icon: Ic, children }: { w?: number; variant?: 'orb' | 'rain'; icon: typeof Server; children?: ReactNode }) {
+export function GlassCloud({ w = 260, variant = 'orb', icon: Ic, children }: { w?: number; variant?: 'orb' | 'rain' | 'plain'; icon: typeof Server; children?: ReactNode }) {
   const k = w / 260
   const d = CLOUD_PATH.replace(/-?\d+(\.\d+)?/g, (n) => (parseFloat(n) * k).toFixed(1))
   const h = 156 * k
   const back = (
     <>
-      <span className="hq-glc-orb"><Ic size={Math.round(22 * k)} strokeWidth={2} /></span>
+      {variant !== 'plain' ? <span className="hq-glc-orb"><Ic size={Math.round(22 * k)} strokeWidth={2} /></span> : null}
       {variant === 'rain' ? (
         <span className="hq-glc-rain">{Array.from({ length: 6 }, (_, i) => <i key={i} style={{ animationDelay: `${(i * 0.37) % 1.6}s`, height: `${[44, 58, 38, 62, 48, 54][i]}px` }} />)}</span>
       ) : null}
@@ -107,12 +97,13 @@ export function Lobby({ go }: { go: (i: number) => void }) {
           )
         })}
       </div>
+      <Hint>Pick a service</Hint>
     </div>
   )
 }
 
 /* ================= Firewall ================= */
-function useTicker(start: number, every: number, step = 1) {
+export function useTicker(start: number, every: number, step = 1) {
   const [n, setN] = useState(start)
   useEffect(() => {
     const id = window.setInterval(() => setN((v) => v + step), every)
@@ -140,7 +131,6 @@ export function FirewallArt() {
           <Leds n={8} />
           <span className="hq-ports">{Array.from({ length: 8 }, (_, i) => <i key={i} />)}</span>
         </span>
-        <Spec title="Next-gen firewall" items={['Blocks threats at the door', 'Secure VPN for remote staff', 'Web & app filtering', 'Monitored 24/7']} side="top" />
       </div>
       <div className="hq-lane l-out">
         {[0, 1, 2, 3].map((i) => {
@@ -187,7 +177,6 @@ export function ServersArt() {
             <Leds n={2} cls="col" />
             <span className="hq-vent" />
           </span>
-          <Spec title="Tower servers" items={['Quiet enough for the office', 'Room to add drives & RAM', 'Ideal for 10–50 users']} side="top" />
         </div>
         <div className="hq-unit hq-hot u-rack">
           <span className="hq-unit-lb">Rack servers</span>
@@ -201,7 +190,6 @@ export function ServersArt() {
             ))}
             <span className="hq-rack-glass" />
           </span>
-          <Spec title="Rack servers" items={['Dual CPUs, up to 2 TB RAM', 'Redundant power & fans', 'Remote health monitoring', 'Installed & cabled for you']} side="top" />
         </div>
         <div className="hq-unit hq-hot u-nas">
           <span className="hq-unit-lb">Storage</span>
@@ -209,7 +197,6 @@ export function ServersArt() {
             <span className="hq-nas-bays">{Array.from({ length: 8 }, (_, i) => <i key={i} style={{ animationDelay: `${i * 0.21}s` }} />)}</span>
             <span className="hq-nas-scr">RAID 6 · OK</span>
           </span>
-          <Spec title="Storage & NAS" items={['RAID drive protection', 'Hot-swap drives', 'Snapshot-ready shares']} side="top" />
         </div>
         <div className="hq-unit hq-hot u-ups">
           <span className="hq-unit-lb">UPS</span>
@@ -217,7 +204,6 @@ export function ServersArt() {
             <span className="hq-ups-scr"><BatteryCharging size={14} /><span className="hq-ups-bar"><i /></span></span>
             <span className="hq-vent" />
           </span>
-          <Spec title="Power protection" items={['Clean power, no surprises', 'Safe shutdown on outages', 'Battery health alerts']} side="top" />
         </div>
       </div>
       <Stone w={980} />
@@ -250,18 +236,15 @@ export function BackupArt() {
         {Array.from({ length: 12 }, (_, i) => (
           <span key={i} className="hq-snap" style={{ transform: `rotate(${i * 30}deg) translateY(-102px)`, animationDelay: `${i * 0.25}s` }} />
         ))}
-        <Spec title="Backup & recovery" items={['Automatic daily backups', '3 copies, 2 media, 1 offsite', 'Ransomware-safe versions', 'Restore tested every month']} side="top" />
       </div>
       <div className="hq-bk-flow f2">
         {[0, 1, 2].map((i) => <span key={i} className="hq-file c" style={{ animationDelay: `${0.3 + i * 0.8}s` }}><Lock size={13} /></span>)}
       </div>
       <div className="hq-bk-cloud">
-        <GlassCloud w={280} variant="rain" icon={Lock}>
+        <GlassCloud w={280} variant="plain" icon={Lock}>
           <b>Offsite copy</b>
           <em>Encrypted · UAE region</em>
         </GlassCloud>
-        <span className="hq-orbit-dot" />
-        <span className="hq-orbit-dot d2" />
       </div>
       <div className="hq-versions">
         {times.map((t, i) => (
@@ -276,60 +259,123 @@ export function BackupArt() {
 }
 
 /* ================= Cloud ================= */
+/* ---- Microsoft 365 -----------------------------------------------------------------------------
+   One perspective plane, centred on the cloud's base:
+   - a platform ring the cloud sits in (back half behind the cloud, front half in front of it)
+   - the app orbit: an arc on the same plane; every app tile sits ON the arc, and the data dots
+     travel only along that arc
+   - a bracket from the platform down to the devices the apps reach                                */
+const M = { cx: 550, cy: 178, orx: 430, ory: 150, prx: 214, pry: 36 }
+const onArc = (deg: number) => {
+  const t = (deg * Math.PI) / 180
+  return { x: M.cx + M.orx * Math.cos(t), y: M.cy + M.ory * Math.sin(t) }
+}
+const M365_APPS = [
+  { src: 'onedrive', lb: 'OneDrive', deg: 180 },
+  { src: 'outlook', lb: 'Outlook', deg: 212 },
+  { src: 'powerpoint', lb: 'PowerPoint', deg: 244 },
+  { src: 'teams', lb: 'Teams', deg: 296 },
+  { src: 'word', lb: 'Word', deg: 328 },
+  { src: 'sharepoint', lb: 'SharePoint', deg: 360 },
+]
+const M365_DEVICES: { lb: string; ic?: typeof Monitor; img?: string }[] = [
+  { lb: 'Office PC', ic: Monitor },
+  { lb: 'Laptop', ic: Laptop },
+  { lb: 'Phone', ic: Smartphone },
+  { lb: 'Tablet', ic: Tablet },
+  { lb: 'Remote staff', img: 'remote-staff' },
+]
+
 export function CloudArt() {
-  const apps = [
-    { ic: Mail, lb: 'Business email' },
-    { ic: FileText, lb: 'Files & OneDrive' },
-    { ic: Video, lb: 'Teams meetings' },
-    { ic: Calendar, lb: 'Shared calendars' },
-    { ic: ShieldCheck, lb: 'Identity & MFA' },
-    { ic: Server, lb: 'Cloud servers' },
-    { ic: Users, lb: 'User management' },
-    { ic: Lock, lb: 'Data protection' },
-  ]
-  const devices = [
-    { ic: Monitor, lb: 'Office PC' },
-    { ic: Laptop, lb: 'Laptop' },
-    { ic: Smartphone, lb: 'Phone' },
-    { ic: Tablet, lb: 'Tablet' },
-    { ic: Laptop, lb: 'Remote staff' },
-  ]
+  const uid = useId().replace(/:/g, '')
+  const { cx, cy, orx, ory, prx, pry } = M
+  const orbit = `M${cx - orx} ${cy} A${orx} ${ory} 0 0 1 ${cx + orx} ${cy}`
+  const orbit2 = `M${cx - 330} ${cy} A330 116 0 0 1 ${cx + 330} ${cy}`
+  const ringBack = `M${cx - prx} ${cy} A${prx} ${pry} 0 0 1 ${cx + prx} ${cy}`
+  const ringFront = `M${cx - prx} ${cy} A${prx} ${pry} 0 0 0 ${cx + prx} ${cy}`
+  const barY = 246
+  const devTop = 270
+  const xs = M365_DEVICES.map((_, i) => cx + (i - 2) * 142)
   return (
-    <div className="hq-art hq-cl">
-      <div className="hq-orbit-wrap">
-        <span className="hq-orbit-ring" />
-        <div className="hq-orbit">
-          {apps.map((a, i) => (
-            <span key={a.lb} className="hq-sat" style={{ ['--a' as string]: `${i * 45}deg` }}>
-              <span className="hq-sat-in" tabIndex={0}><a.ic size={19} /><em>{a.lb}</em></span>
-            </span>
-          ))}
-        </div>
-      </div>
-      <div className="hq-cloud hq-hot">
-        <GlassCloud w={310} variant="orb" icon={Cloud}>
-          <b>Microsoft 365</b>
-          <em>& cloud servers</em>
-        </GlassCloud>
-        <Spec title="Cloud & Microsoft 365" items={['Migration with zero data loss', 'Licences managed for you', 'Secure access from anywhere']} side="right" />
-      </div>
-      <div className="hq-devices">
-        {devices.map((d, i) => (
-          <span key={d.lb} className="hq-dev">
-            <span className="hq-dev-ic"><d.ic size={24} strokeWidth={1.5} /></span>
-            <span className="hq-sync" style={{ animationDelay: `${i * 0.35}s` }} />
-            <em>{d.lb}</em>
-          </span>
+    <div className="hq-art hq-cl m3">
+      {/* behind the cloud */}
+      <svg className="m3-svg" viewBox="0 0 1100 380" aria-hidden>
+        <defs>
+          <linearGradient id={`m3o${uid}`} x1="0" x2="1">
+            <stop offset="0" stopColor="#2563ff" stopOpacity="0" />
+            <stop offset="0.18" stopColor="#2563ff" stopOpacity="0.45" />
+            <stop offset="0.5" stopColor="#12a5f5" stopOpacity="0.6" />
+            <stop offset="0.82" stopColor="#3b1ee0" stopOpacity="0.45" />
+            <stop offset="1" stopColor="#3b1ee0" stopOpacity="0" />
+          </linearGradient>
+          <linearGradient id={`m3r${uid}`} x1="0" x2="1">
+            <stop offset="0" stopColor="#ffffff" stopOpacity="0.2" />
+            <stop offset="0.5" stopColor="#ffffff" stopOpacity="1" />
+            <stop offset="1" stopColor="#ffffff" stopOpacity="0.2" />
+          </linearGradient>
+          <radialGradient id={`m3g${uid}`}>
+            <stop offset="0" stopColor="#3b74ff" stopOpacity="0.7" />
+            <stop offset="0.6" stopColor="#4f8bff" stopOpacity="0.18" />
+            <stop offset="1" stopColor="#4f8bff" stopOpacity="0" />
+          </radialGradient>
+        </defs>
+        <path id={`m3p${uid}`} d={orbit} className="m3-orbit" stroke={`url(#m3o${uid})`} />
+        <path d={orbit2} className="m3-orbit2" />
+        {[0, 1, 2].map((i) => (
+          <circle key={i} r={4} className="m3-dot">
+            <animateMotion dur="7.5s" begin={`${-i * 2.5}s`} repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear">
+              <mpath href={`#m3p${uid}`} />
+            </animateMotion>
+          </circle>
         ))}
+        <ellipse cx={cx} cy={cy + 2} rx={prx + 30} ry={pry + 16} fill={`url(#m3g${uid})`} />
+        <path d={ringBack} className="m3-ring" stroke={`url(#m3r${uid})`} />
+        {/* bracket to the devices */}
+        <path className="m3-wire" d={`M${cx} ${cy + pry} V${barY}`} />
+        {xs.map((x) => {
+          const r = 12
+          const d = x === cx ? `M${cx} ${barY} V${devTop}` : `M${cx} ${barY} H${x < cx ? x + r : x - r} Q${x} ${barY} ${x} ${barY + r} V${devTop}`
+          return <path key={x} className="m3-wire" d={d} />
+        })}
+        {xs.map((x) => <circle key={`e${x}`} className="m3-end" cx={x} cy={devTop} r={3.4} />)}
+      </svg>
+
+      <div className="m3-cloud hq-hot">
+        <GlassCloud w={262} variant="plain" icon={Cloud}>
+          <img className="m3-logo" src="/assets/m365/m365.png" alt="" draggable={false} />
+          <b>Microsoft 365</b>
+        </GlassCloud>
       </div>
-      <Stone w={960} />
+
+      {/* in front of the cloud: the near half of the platform ring, with a light sweeping along it */}
+      <svg className="m3-svg front" viewBox="0 0 1100 380" aria-hidden>
+        <path d={ringFront} className="m3-ring" stroke={`url(#m3r${uid})`} />
+        <path d={ringFront} className="m3-sweep" pathLength={1} />
+      </svg>
+
+      {M365_APPS.map((a) => {
+        const p = onArc(a.deg)
+        return (
+          <span key={a.src} className="m3-app" style={{ left: p.x, top: p.y }} tabIndex={0}>
+            <span className="m3-tile"><img src={`/assets/m365/${a.src}.png`} alt="" draggable={false} /></span>
+            <em>{a.lb}</em>
+          </span>
+        )
+      })}
+
+      {M365_DEVICES.map((d, i) => (
+        <span key={d.lb} className="m3-dev" style={{ left: xs[i], top: devTop + 6 }}>
+          {d.img ? <img src={`/assets/m365/${d.img}.png`} alt="" draggable={false} /> : d.ic ? <d.ic size={28} strokeWidth={1.7} /> : null}
+          <b>{d.lb}</b>
+        </span>
+      ))}
       <Hint>Hover an app</Hint>
     </div>
   )
 }
 
 /* ================= CCTV ================= */
-function Feed({ kind, name }: { kind: 'park' | 'hall' | 'door' | 'ware' | 'desk' | 'gate'; name: string }) {
+export function Feed({ kind, name }: { kind: 'park' | 'hall' | 'door' | 'ware' | 'desk' | 'gate'; name: string }) {
   const [t, setT] = useState(() => new Date())
   useEffect(() => {
     const id = window.setInterval(() => setT(new Date()), 1000)
@@ -353,7 +399,7 @@ function Feed({ kind, name }: { kind: 'park' | 'hall' | 'door' | 'ware' | 'desk'
 }
 
 /** A ceiling dome: mount plate, white housing, smoked glass with a lens that pans. */
-function DomeCam() {
+export function DomeCam() {
   return (
     <span className="cam-dome">
       <span className="cd-plate" />
@@ -369,7 +415,7 @@ function DomeCam() {
 }
 
 /** A wall bullet: wall plate, arm, ball joint, housing with sun shield, IR ring and glass lens. */
-function BulletCam() {
+export function BulletCam() {
   return (
     <span className="cam-bullet">
       <span className="cb-plate" />
@@ -395,12 +441,10 @@ export function CctvArt() {
       <span className="hq-cam-wrap w-dome hq-hot">
         <DomeCam />
         <span className="hq-cam-lb">360° dome · 4K</span>
-        <Spec title="Dome camera" items={['4K, 360° fisheye view', 'Infrared night vision', 'Vandal-proof housing']} side="right" />
       </span>
       <span className="hq-cam-wrap w-bullet hq-hot">
         <BulletCam />
         <span className="hq-cam-lb">Bullet · night vision</span>
-        <Spec title="Bullet camera" items={['Outdoor, weatherproof', 'Number-plate capture', 'SIRA-compliant install']} side="left" />
       </span>
       <div className="hq-wall">
         <Feed kind="park" name="CAM 01 · Parking" />
@@ -472,7 +516,6 @@ export function PhoneArt() {
             <span key={a.key} className={`hq-ivr-o${i === at ? ' on' : ''}`}><kbd>{a.key}</kbd>{a.lb}</span>
           ))}
         </span>
-        <Spec title="Business telephony" items={['Cloud PBX & SIP lines', 'Auto-attendant (IVR)', 'Call recording & queues', 'Extensions on mobile']} side="top" />
       </div>
       <div className="hq-agents">
         {AGENTS.map((a, i) => (
@@ -645,6 +688,34 @@ const SCREEN_VIEW: Record<(typeof SCREENS)[number]['id'], () => ReactNode> = {
 /** Where each module label sits, in stage units: three on the left of the screen, two on the right. */
 const ERP_SPOTS = [[150, 70], [130, 175], [150, 280], [950, 95], [970, 230]] as const
 
+/** The rotating dashboard monitor on its own (used by the Business Applications hero). */
+export function DashboardMonitor({ cur }: { cur: number }) {
+  const S = SCREENS[cur]
+  const View = SCREEN_VIEW[S.id]
+  return (
+    <span className="hq-bezel">
+      <span className="hq-cam-dot" />
+      <span className="db">
+        <span className="db-side">
+          <span className="db-logo"><img src="/assets/logo-mark.png" alt="" /></span>
+          {SCREENS.map((m, i) => <span key={m.id} className={`db-nav${i === cur ? ' on' : ''}`}><m.ic size={13} /></span>)}
+        </span>
+        <span className="db-main" key={S.id}>
+          <span className="db-top">
+            <b>{S.lb}</b>
+            <span className="db-search"><Search size={10} /> Search</span>
+            <span className="db-date">Oct 2026</span>
+            <span className="db-av me">MB</span>
+          </span>
+          <span className="db-body"><View /></span>
+        </span>
+      </span>
+      <span className="hq-glare" />
+    </span>
+  )
+}
+export { SCREENS as DASH_SCREENS }
+
 export function ErpArt() {
   const [at, setAt] = useState(0)
   const [hold, setHold] = useState<number | null>(null)
@@ -703,6 +774,7 @@ export function ErpArt() {
         <span className="hq-base" />
       </div>
       <Stone w={720} />
+      <Hint>Hover a module</Hint>
     </div>
   )
 }

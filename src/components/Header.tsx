@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'motion/react'
-import { ArrowRight, ChevronDown, Menu, Phone, X } from 'lucide-react'
-import { navGroups, type NavGroup } from '../data/site'
+import { ChevronDown, Menu, Phone, X } from 'lucide-react'
+import { navGroups, type NavGroup, type NavItem } from '../data/site'
 
 export function AwardBar() {
   return (
@@ -17,17 +17,11 @@ export function AwardBar() {
 
 const PHONE = '+971 4 241 4120'
 
-function Thumb({ src, alt }: { src?: string; alt: string }) {
+/** line icon in a quiet brand-blue outline, as in the reference menu */
+function ItemIcon({ icon: Icon }: { icon?: NavItem['icon'] }) {
   return (
-    <span className="relative block h-[68px] w-[148px] flex-none overflow-hidden rounded-xl bg-muted ring-1 ring-black/5">
-      {src && (
-        <img
-          src={src}
-          alt={alt}
-          loading="lazy"
-          className="h-full w-full object-cover transition-transform duration-500 group-hover/item:scale-110"
-        />
-      )}
+    <span className="mt-0.5 flex size-7 flex-none items-center justify-center text-[#4f5bd5] transition-transform duration-300 group-hover/item:scale-110">
+      {Icon ? <Icon size={22} strokeWidth={1.6} /> : null}
     </span>
   )
 }
@@ -35,45 +29,35 @@ function Thumb({ src, alt }: { src?: string; alt: string }) {
 function MegaPanel({ group, onClose }: { group: NavGroup; onClose: () => void }) {
   const cols = group.items.length > 4 ? 3 : 2
   return (
-    <div className="overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-[0_30px_80px_-20px_rgba(15,23,42,0.28)]">
-      <div className="px-8 pb-6 pt-6">
-        {group.eyebrow && <div className="mb-4 text-[13px] font-semibold text-primary">{group.eyebrow}</div>}
-        <div className={`grid gap-x-8 gap-y-3 ${cols === 3 ? 'grid-cols-3' : 'grid-cols-2'}`}>
+    <div className="overflow-hidden rounded-[22px] border border-[#e4e6ef] bg-white shadow-[0_24px_60px_-28px_rgba(15,23,42,0.22)]">
+      <div className="px-9 pb-7 pt-7">
+        {group.eyebrow && <div className="mb-5 text-[13px] font-semibold text-[#4f5bd5]">{group.eyebrow}</div>}
+        <div className={`grid gap-x-8 gap-y-1 ${cols === 3 ? 'grid-cols-3' : 'grid-cols-2'}`}>
           {group.items.map((it, i) => (
-            <motion.div
-              key={it.title}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.03 * i }}
-            >
-              <Link
-                to={it.to}
-                onClick={onClose}
-                className="group/item flex items-start gap-4 rounded-2xl p-2.5 transition-colors hover:bg-slate-50"
-              >
-                <Thumb src={it.img} alt={it.title} />
-                <span className="flex min-w-0 flex-col pt-0.5">
-                  <span className="text-[16px] font-semibold leading-snug tracking-tight text-foreground transition-colors group-hover/item:text-primary">
+            <motion.div key={it.title} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.25, delay: 0.025 * i }}>
+              <Link to={it.to} onClick={onClose} className="group/item flex items-start gap-4 rounded-2xl px-3 py-3.5 transition-colors hover:bg-[#f5f6fb]">
+                <ItemIcon icon={it.icon} />
+                <span className="flex min-w-0 flex-col">
+                  <span className="flex items-center gap-2 text-[16.5px] font-semibold leading-snug tracking-tight text-[#0a0b3d] transition-colors group-hover/item:text-[#4f5bd5]">
                     {it.title}
+                    {it.badge && <span className="rounded-md bg-[#fdf3d0] px-2 py-0.5 text-[12px] font-semibold text-[#0a0b3d]">{it.badge}</span>}
                   </span>
-                  <span className="mt-1 text-[13.5px] leading-snug text-muted-foreground">{it.desc}</span>
+                  <span className="mt-1 text-[14px] leading-snug text-[#6b6f80]">{it.desc}</span>
                 </span>
               </Link>
             </motion.div>
           ))}
         </div>
       </div>
-      <div className="flex flex-wrap items-center justify-between gap-4 border-t border-slate-200 bg-slate-50/80 px-8 py-4">
-        {group.cta ? (
-          <Link to={group.cta.to} onClick={onClose} className="group inline-flex items-center gap-2 text-sm font-semibold text-primary">
-            {group.cta.text}
-            <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
-          </Link>
-        ) : <span />}
+      <div className="flex flex-wrap items-center justify-between gap-4 border-t border-[#e4e6ef] bg-[#f6f6fb] px-9 py-4">
+        <span className="flex items-center gap-4 text-[14.5px] text-[#0a0b3d]">
+          <b className="font-semibold">Prefer to talk?</b>
+          <a href={`tel:${PHONE.replace(/\s/g, '')}`} className="text-[#4f5bd5] underline decoration-[#c7cbf0] underline-offset-4 hover:decoration-[#4f5bd5]">{PHONE}</a>
+        </span>
         <div className="flex items-center gap-5">
-          <a href={`tel:${PHONE.replace(/\s/g, '')}`} className="text-sm font-medium text-foreground hover:text-primary">Call {PHONE}</a>
-          <Link to="/contact" onClick={onClose} className="rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground shadow-md shadow-primary/25 transition-transform hover:-translate-y-0.5">
-            Book free demo
+          <Link to="/contact" onClick={onClose} className="text-[14.5px] font-semibold text-[#0a0b3d] hover:text-[#4f5bd5]">Schedule a demo</Link>
+          <Link to="/contact" onClick={onClose} className="rounded-xl bg-[#4f5bd5] px-5 py-2.5 text-[14.5px] font-semibold text-white shadow-[0_10px_22px_-10px_rgba(79,91,213,0.8)] transition-transform hover:-translate-y-0.5">
+            Get a free quote
           </Link>
         </div>
       </div>
@@ -83,22 +67,26 @@ function MegaPanel({ group, onClose }: { group: NavGroup; onClose: () => void })
 
 function ListPanel({ group, onClose }: { group: NavGroup; onClose: () => void }) {
   return (
-    <div className="w-[340px] overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-2 shadow-[0_24px_60px_-20px_rgba(15,23,42,0.28)]">
-      {group.items.map((it, i) => (
-        <motion.div key={it.title} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.25, delay: 0.04 * i }}>
-          <Link to={it.to} onClick={onClose} className="group/item flex items-center justify-between gap-3 rounded-xl px-4 py-3 transition-colors hover:bg-slate-50">
-            <span className="flex flex-col">
-              <span className="text-[15.5px] font-semibold tracking-tight text-foreground transition-colors group-hover/item:text-primary">{it.title}</span>
-              <span className="text-[13px] text-muted-foreground">{it.desc}</span>
-            </span>
-            <ArrowRight size={15} className="flex-none -translate-x-1 text-primary opacity-0 transition-all group-hover/item:translate-x-0 group-hover/item:opacity-100" />
-          </Link>
-        </motion.div>
-      ))}
-      {group.cta && (
-        <Link to={group.cta.to} onClick={onClose} className="mt-1 flex items-center gap-2 border-t border-slate-100 px-4 pb-2 pt-3 text-[14px] font-semibold text-primary">
-          {group.cta.text} <ArrowRight size={14} />
-        </Link>
+    <div className="w-[360px] overflow-hidden rounded-[22px] border border-[#e4e6ef] bg-white shadow-[0_24px_60px_-28px_rgba(15,23,42,0.22)]">
+      <div className="p-3">
+        {group.items.map((it, i) => (
+          <motion.div key={it.title} initial={{ opacity: 0, x: -6 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.22, delay: 0.035 * i }}>
+            <Link to={it.to} onClick={onClose} className="group/item flex items-start gap-4 rounded-2xl px-3 py-3 transition-colors hover:bg-[#f5f6fb]">
+              <ItemIcon icon={it.icon} />
+              <span className="flex flex-col">
+                <span className="text-[16px] font-semibold tracking-tight text-[#0a0b3d] transition-colors group-hover/item:text-[#4f5bd5]">{it.title}</span>
+                <span className="mt-0.5 text-[13.5px] leading-snug text-[#6b6f80]">{it.desc}</span>
+              </span>
+            </Link>
+          </motion.div>
+        ))}
+      </div>
+      {group.footer && (
+        <div className="flex flex-col gap-1 border-t border-[#e4e6ef] bg-[#f6f6fb] px-6 py-3">
+          {group.footer.map((f) => (
+            <Link key={f.label} to={f.to} onClick={onClose} className="py-1.5 text-[14px] text-[#6b6f80] transition-colors hover:text-[#4f5bd5]">{f.label}</Link>
+          ))}
+        </div>
       )}
     </div>
   )
@@ -158,12 +146,12 @@ export default function Header() {
                     to={g.to}
                     onClick={close}
                     aria-expanded={active}
-                    className={`flex items-center gap-1.5 rounded-xl px-3.5 py-2.5 text-[16px] font-semibold tracking-tight text-inherit transition-colors ${
-                      active || here(g.to) ? 'bg-slate-100 text-primary' : 'text-foreground hover:bg-slate-50'
+                    className={`flex items-center gap-1.5 rounded-xl px-3.5 py-2.5 text-[16px] font-semibold tracking-tight transition-colors ${
+                      active || (open === null && here(g.to)) ? 'bg-[#f0f1f8] text-[#0a0b3d]' : 'text-[#0a0b3d] hover:bg-[#f6f6fb]'
                     }`}
                   >
                     {g.label}
-                    <ChevronDown size={16} className={`transition-transform duration-300 ${active ? 'rotate-180' : ''}`} />
+                    <ChevronDown size={16} className={`text-[#9a9db0] transition-transform duration-300 ${active ? 'rotate-180' : ''}`} />
                   </Link>
                 ) : (
                   <button
@@ -171,18 +159,18 @@ export default function Header() {
                     aria-expanded={active}
                     onClick={() => setOpen(active ? null : i)}
                     className={`flex items-center gap-1.5 rounded-xl px-3.5 py-2.5 text-[16px] font-semibold tracking-tight transition-colors ${
-                      active ? 'bg-slate-100 text-primary' : 'text-foreground hover:bg-slate-50'
+                      active ? 'bg-[#f0f1f8] text-[#0a0b3d]' : 'text-[#0a0b3d] hover:bg-[#f6f6fb]'
                     }`}
                   >
                     {g.label}
-                    <ChevronDown size={16} className={`transition-transform duration-300 ${active ? 'rotate-180' : ''}`} />
+                    <ChevronDown size={16} className={`text-[#9a9db0] transition-transform duration-300 ${active ? 'rotate-180' : ''}`} />
                   </button>
                 )}
                 {g.kind === 'list' && (
                   <AnimatePresence>
                     {active && (
                       <motion.div
-                        className="absolute left-0 top-full z-50 pt-3"
+                        className="absolute left-0 top-full z-50 pt-2"
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 6 }}
@@ -247,24 +235,28 @@ export default function Header() {
           >
             {navGroups.map((g, i) => (
               <div key={g.label} className="border-b border-slate-100">
-                <button
-                  type="button"
-                  onClick={() => setMobileOpen(mobileOpen === i ? null : i)}
-                  className="flex w-full items-center justify-between py-4 text-left text-[17px] font-semibold text-foreground"
-                >
-                  {g.label}
-                  <ChevronDown size={18} className={`transition-transform ${mobileOpen === i ? 'rotate-180 text-primary' : ''}`} />
-                </button>
+                {/* the label itself opens the main page; the chevron only expands the sub-options */}
+                <div className="flex items-center justify-between">
+                  {g.to ? (
+                    <Link to={g.to} onClick={close} className="flex-1 py-4 text-left text-[17px] font-semibold text-foreground">{g.label}</Link>
+                  ) : (
+                    <button type="button" onClick={() => setMobileOpen(mobileOpen === i ? null : i)} className="flex-1 py-4 text-left text-[17px] font-semibold text-foreground">{g.label}</button>
+                  )}
+                  <button
+                    type="button"
+                    aria-label={`Show ${g.label} options`}
+                    aria-expanded={mobileOpen === i}
+                    onClick={() => setMobileOpen(mobileOpen === i ? null : i)}
+                    className="flex size-11 items-center justify-center"
+                  >
+                    <ChevronDown size={18} className={`transition-transform ${mobileOpen === i ? 'rotate-180 text-primary' : ''}`} />
+                  </button>
+                </div>
                 {mobileOpen === i && (
                   <div className="pb-3">
-                    {g.to && (
-                      <Link to={g.to} onClick={close} className="flex items-center gap-2 py-2.5 text-[15px] font-semibold text-primary">
-                        View all {g.label} <ArrowRight size={15} />
-                      </Link>
-                    )}
                     {g.items.map((it) => (
                       <Link key={it.title} to={it.to} onClick={close} className="flex items-center gap-3 rounded-xl py-2.5">
-                        {it.img && <img src={it.img} alt="" className="h-12 w-20 flex-none rounded-lg object-cover" />}
+                
                         <span className="flex flex-col">
                           <span className="text-[15px] font-semibold text-foreground">{it.title}</span>
                           <span className="text-[12.5px] text-muted-foreground">{it.desc}</span>

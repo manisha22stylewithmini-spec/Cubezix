@@ -1,5 +1,6 @@
+import { pagePathById } from './pages'
 import {
-  Award, BadgeCheck, Banknote, Building2, Cable, Clock, Cloud, ClipboardCheck, Compass, Database,
+  Activity, Award, BadgeCheck, Banknote, Building2, Cable, Clock, Cloud, ClipboardCheck, Compass, Database, Fingerprint, Lock, Mail, MonitorCheck, Network,
   Handshake, Headphones, Laptop, Layers, Phone, PhoneCall, Rocket, Server, Settings,
   Shield, ShieldCheck, TrendingUp, Truck, Users, Video, Wifi, Wrench, type LucideIcon,
 } from 'lucide-react'
@@ -72,13 +73,13 @@ export const CATEGORIES: Category[] = [
     servicesTitle: 'Everything under IT Services',
     servicesIntro: 'Pick the service you need, or combine several under a single annual contract.',
     services: [
-      { id: 'it-amc', title: 'IT AMC', icon: ShieldCheck, img: m('it-amc'), desc: 'Annual Maintenance Contract with 24/7 L1, L2 and L3 engineers: reliable support for your IT systems.', points: ['24/7 monitoring to prevent failures and downtime', 'Unlimited remote and onsite support', 'Backup, firewall management and Microsoft 365 support'] },
+      { id: 'it-amc', title: 'IT AMC', icon: ShieldCheck, img: m('it-amc'), to: '/services/it-services/it-amc', desc: 'Annual Maintenance Contract with 24/7 L1, L2 and L3 engineers: reliable support for your IT systems.', points: ['24/7 monitoring to prevent failures and downtime', 'Unlimited remote and onsite support', 'Backup, firewall management and Microsoft 365 support'] },
       { id: 'it-outsourcing', title: 'IT Outsourcing', icon: Users, img: m('it-outsourcing'), desc: 'Expert IT services for optimal efficiency, without an in-house IT department.', points: ['Lower cost than in-house staff and infrastructure', 'Certified professionals across many sectors', 'Dedicated, remote or onsite engineers'] },
       { id: 'new-office', title: 'New Office IT Setup', icon: Building2, img: m('new-office'), desc: 'Tailored IT infrastructure design: end-to-end planning, installation and support for new offices.', points: ['Planning and custom infrastructure design', 'Cabling, Wi-Fi, security and backup installed', 'Work scheduled around your business hours'] },
       { id: 'it-relocation', title: 'IT Relocation', icon: Truck, img: m('it-relocation'), desc: 'Reliable IT office relocation: planning, removal, transport and reinstallation.', points: ['Advance planning and equipment inventory', 'Extra copies of critical data secured', 'After-hours or weekend moves with aftercare'] },
       { id: 'it-consultancy', title: 'IT Consultancy', icon: Compass, img: m('it-consultancy'), desc: 'Your partner in IT excellence: advice to improve infrastructure, systems and processes.', points: ['Strategic IT planning aligned with business goals', 'Network and system security', 'Cloud consulting and migration'] },
       { id: 'it-support', title: 'IT Support', icon: Headphones, img: m('it-support'), desc: 'Managed IT support with proactive monitoring, helpdesk and outsourced IT around the clock.', points: ['Proactive IT monitoring and management', 'Helpdesk and IT strategy advisory', 'Backup, disaster recovery and server maintenance'] },
-      { id: 'it-infrastructure', title: 'IT Infrastructure', icon: Server, img: m('it-infrastructure'), desc: 'Robust infrastructure for seamless operations: design, installation and support.', to: '/services/it-infrastructure', points: ['Structured cabling, managed Wi-Fi and CCTV', '24x7 help desk and network management', 'Firewalls, VPNs and threat monitoring'] },
+      { id: 'it-infrastructure', title: 'IT Infrastructure', icon: Server, img: m('it-infrastructure'), desc: 'Robust infrastructure for seamless operations: design, installation and support.', points: ['Structured cabling, managed Wi-Fi and CCTV', '24x7 help desk and network management', 'Firewalls, VPNs and threat monitoring'] },
       { id: 'cloud-migration', title: 'Cloud Migration', icon: Cloud, img: m('cloud-migration'), desc: 'Expert cloud management that keeps your cloud running efficiently, securely and at scale.', points: ['Integrates with your existing IT systems', 'Multi-cloud management with 24/7 access', 'Firewalls, encryption and multi-factor authentication'] },
       { id: 'ict-solutions', title: 'ICT Solutions', icon: Layers, img: m('ict-solutions'), desc: 'IT infrastructure, communication networks and managed services, integrated for your business.', points: ['Customized IT solutions for each business', 'Cybersecurity and scalable cloud services', 'Network management and 24/7 technical support'] },
     ],
@@ -201,3 +202,19 @@ export const CATEGORIES: Category[] = [
 
 export const categoryBySlug = (slug: string) => CATEGORIES.find((c) => c.slug === slug)
 export const categoryPath = (slug: string) => `/services/${slug}`
+
+const ex = (slug: string, svc: Service) => categoryBySlug(slug)!.services.push({ inMenu: false, ...svc })
+
+// more pages from the live site, listed on their category page (not in the header menu)
+ex('it-services', { id: 'it-helpdesk', title: 'IT Helpdesk Services', icon: Headphones, desc: 'Round-the-clock IT support from certified professionals by phone, email, web chat or a secure portal.', points: ['Rapid triage and first-call resolution', 'Proprietary ITSM platform', 'Custom SLAs'] })
+ex('it-services', { id: 'it-system-monitoring', title: 'IT System Monitoring', icon: MonitorCheck, desc: 'Proactive, real-time monitoring that keeps operations running and prevents issues before they arise.', points: ['Servers, networks, apps and cloud', 'Real-time alerts by email or SMS', 'Performance and incident reports'] })
+ex('it-services', { id: 'cyber-security', title: 'Cyber Security', icon: Lock, desc: 'Cyber security in Dubai that protects your data around the clock from threats.', points: ['Email, malware and firewall protection', '24/7 threat monitoring', 'Backup and disaster recovery'] })
+ex('it-services', { id: 'network-support', title: 'Network Support Services', icon: Network, desc: 'Adaptable network support for enterprises of all sizes, aimed at optimal performance.', points: ['24/7 network monitoring', 'Remote issue resolution', 'Proactive threat management'] })
+ex('it-services', { id: 'remote-it-support', title: 'Remote IT Support', icon: Activity, desc: 'Professional remote IT support that keeps businesses running and manages remote work efficiently.', points: ['Round-the-clock remote access', 'Most issues fixed within minutes', 'Encrypted, secure sessions'] })
+ex('it-infrastructure', { id: 'cloud-computing', title: 'Cloud Computing Solutions', icon: Cloud, desc: 'Bespoke cloud computing services across the UAE for performance, scalability and cost savings.', points: ['Public, private and hybrid cloud', 'SaaS, PaaS and IaaS', 'Dedicated account managers'] })
+ex('it-infrastructure', { id: 'cloud-email-hosting', title: 'Email Hosting Services', icon: Mail, desc: 'Tailored business email solutions that improve communication efficiency and security.', points: ['Managed cloud mail and Microsoft Exchange', 'Mobile email access', 'Backups, archiving and recovery'] })
+ex('elv-security', { id: 'access-control', title: 'Access Control System', icon: Fingerprint, desc: 'Cost-effective biometric, card and RFID access control with integrated time attendance.', points: ['Single-door to multi-door systems', 'Vehicle access and turnstile gates', 'Web-based access software'] })
+ex('business-applications', { id: 'erp', title: 'ERP Solutions', icon: Layers, desc: 'Customizable ERP that connects finance, HR, procurement, inventory and sales in one system.', points: ['Eight core modules', 'Industry-specific customization', '24/7 Dubai support'] })
+
+// every service opens its own page
+for (const c of CATEGORIES) for (const s of c.services) s.to ??= pagePathById(s.id)

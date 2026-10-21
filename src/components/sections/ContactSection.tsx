@@ -82,19 +82,19 @@ export default function ContactSection() {
           transition={{ duration: 0.8, delay: 0.1, ease: [0.2, 0.7, 0.2, 1] }}
         >
           <h3 className="m-0 text-[26px] font-bold tracking-tight text-[#0b1220]">Schedule a free consultation</h3>
-          <p className="m-0 mt-3 text-[15px] text-[#667085]">No role posted for your skill set? Apply anyway — we keep CVs on file.</p>
+          <p className="m-0 mt-3 text-[15px] text-[#667085]">Tell us about your business and we will come back with a scoped proposal.</p>
 
           <div className="mt-7 grid gap-x-4 gap-y-5 sm:grid-cols-2">
             <Field label="Full name"><input className={field} name="name" placeholder="Your name" required autoComplete="name" /></Field>
             <Field label="Email"><input className={field} type="email" name="email" placeholder="name@email.com" required autoComplete="email" /></Field>
             <Field label="Phone"><input className={field} type="tel" name="phone" placeholder="+971" autoComplete="tel" /></Field>
-            <Field label="Role you are after"><input className={field} name="role" placeholder="e.g. Network Engineer" /></Field>
+            <Field label="Service you need"><input className={field} name="service" placeholder="e.g. IT AMC, CCTV, Microsoft 365" /></Field>
             <div className="sm:col-span-2">
               <Field label="Anything we should know">
                 <textarea
                   className={`${field} h-[132px] resize-none py-3.5`}
                   name="notes"
-                  placeholder="Certifications, platforms you run, notice period."
+                  placeholder="Number of users and sites, current setup, anything urgent."
                 />
               </Field>
             </div>

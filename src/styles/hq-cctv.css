@@ -1,0 +1,99 @@
+/* CCTV station (1100 x 380 stage) */
+.c-art { }
+.c-links { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; z-index: 1; }
+.c-links path { fill: none; stroke: #8fb0f0; stroke-width: 1.6; stroke-dasharray: 4 6; stroke-linecap: round; }
+.c-run { position: absolute; left: 0; top: 0; z-index: 2; width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; border-radius: 50%; background: #2563ff; box-shadow: 0 0 10px #2563ff; offset-rotate: 0deg; animation: c-run 2.8s ease-in-out infinite; opacity: 0; }
+@keyframes c-run { 0% { offset-distance: 0%; opacity: 0; } 12% { opacity: 1; } 88% { opacity: 1; } 100% { offset-distance: 100%; opacity: 0; } }
+
+/* monitor: deep-blue bezel, glowing edge, black glass, 3 x 2 clips */
+.c-monitor { position: absolute; left: 50%; top: 8px; width: 570px; height: 276px; margin-left: -285px; z-index: 3; padding: 9px; border-radius: 22px; background: linear-gradient(180deg, #223a78, #12234f); box-shadow: 0 0 0 2px #2d4f9e, 0 0 26px 2px rgba(37, 99, 255, 0.5), 0 34px 56px -26px rgba(10, 20, 70, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.18); }
+.c-glowline { position: absolute; left: 12%; right: 12%; top: -1px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, transparent, #5aa2ff, transparent); }
+.c-screen { width: 100%; height: 100%; padding: 22px 6px 22px; border-radius: 14px; background: #000; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 1fr); gap: 3px; }
+.c-bezel-dot { position: absolute; left: 50%; top: 4px; width: 4px; height: 4px; margin-left: -2px; border-radius: 50%; background: #4a64a8; }
+.c-tile { position: relative; overflow: hidden; background: #101827; outline: none; cursor: zoom-in; transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.45s; }
+.c-tile img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.c-tile .hq-feed { position: absolute; inset: 0; cursor: zoom-in; }
+.c-tile:nth-child(1) { transform-origin: 0 0; } .c-tile:nth-child(2) { transform-origin: 50% 0; } .c-tile:nth-child(3) { transform-origin: 100% 0; }
+.c-tile:nth-child(4) { transform-origin: 0 100%; } .c-tile:nth-child(5) { transform-origin: 50% 100%; } .c-tile:nth-child(6) { transform-origin: 100% 100%; }
+.c-tile:hover, .c-tile:focus { z-index: 6; transform: scale(1.9); box-shadow: 0 24px 46px rgba(0, 0, 0, 0.55), 0 0 0 2px #2563ff; }
+.c-scan { position: absolute; left: 0; right: 0; height: 30%; z-index: 2; pointer-events: none; background: linear-gradient(180deg, transparent, rgba(160, 205, 255, 0.12), transparent); animation: hq-scan 4s linear infinite; }
+.c-tile::after { content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 3; background: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 3px); }
+.c-neck { position: absolute; left: 50%; top: 284px; width: 44px; height: 22px; margin-left: -22px; z-index: 2; background: linear-gradient(90deg, #aab7d0, #dbe3f1, #aab7d0); }
+.c-base { position: absolute; left: 50%; top: 298px; width: 620px; height: 54px; margin-left: -310px; z-index: 2; border-radius: 30px 30px 24px 24px; background: linear-gradient(180deg, #ffffff, #e4ebf7); box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.9), 0 24px 36px -16px rgba(37, 99, 255, 0.4); }
+.c-base i { position: absolute; left: 20%; right: 20%; bottom: 8px; height: 3px; border-radius: 2px; background: linear-gradient(90deg, transparent, #3b82ff, transparent); box-shadow: 0 0 12px #3b82ff; }
+.c-alert { position: absolute; left: auto; right: 24px; top: 270px; z-index: 7; }
+
+/* cameras */
+.c-camwrap { position: absolute; z-index: 4; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.c-camwrap.l { left: 14px; top: 20px; }
+.c-camwrap.r { right: 8px; top: 40px; }
+.c-chip { display: inline-flex; align-items: center; gap: 9px; padding: 11px 20px 11px 14px; border-radius: 999px; background: rgba(255, 255, 255, 0.92); color: #2563ff; font: 800 14.5px Lato, sans-serif; white-space: nowrap; box-shadow: inset 0 1px 0 #fff, 0 0 0 1px rgba(20, 30, 70, 0.05), 0 14px 26px -14px rgba(37, 99, 255, 0.5); }
+.c-chip svg { flex: none; }
+.c-chip { color: #0b1220; }
+.c-chip svg { color: #2563ff; }
+
+.cc-dome { position: relative; display: block; width: 236px; height: 168px; }
+.cc-dome .plate, .cc-bullet .plate { position: absolute; border-radius: 16px; background: linear-gradient(180deg, #f7f9fd, #dde5f1); box-shadow: inset 0 1px 0 #fff, 0 12px 20px -10px rgba(20, 30, 70, 0.3); }
+.cc-dome .plate { left: 0; top: 18px; width: 64px; height: 138px; }
+.cc-dome .plate i, .cc-bullet .plate i { position: absolute; left: 50%; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #c3cddf, #8e9ab2); box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.25); }
+.cc-dome .plate i:first-child { top: 16px; } .cc-dome .plate i:last-child { bottom: 16px; }
+.cc-dome .arm { position: absolute; left: 52px; top: 64px; width: 48px; height: 34px; border-radius: 10px; background: linear-gradient(180deg, #f1f4fa, #d2dbea); }
+.cc-dome .body { position: absolute; left: 62px; top: 0; width: 172px; height: 160px; }
+.cc-dome .cap { position: absolute; left: 0; right: 0; top: 12px; height: 70px; border-radius: 86px 86px 28px 28px / 70px 70px 28px 28px; background: linear-gradient(180deg, #ffffff 0%, #eef2f9 70%, #d9e1ef); box-shadow: inset 0 -6px 0 #e3e9f4, 0 10px 20px -8px rgba(20, 30, 70, 0.3); }
+.cc-dome .ring { position: absolute; left: 4px; right: 4px; bottom: 0; height: 9px; border-radius: 6px; background: linear-gradient(90deg, #2a62ff, #4f9bff, #2a62ff); box-shadow: 0 0 12px rgba(59, 130, 255, 0.8); }
+.cc-dome .glass { position: absolute; left: 14px; right: 14px; top: 76px; height: 82px; border-radius: 0 0 86px 86px / 0 0 82px 82px; overflow: hidden; background: radial-gradient(ellipse at 50% 0%, #4a5a7f 0%, #16203a 55%, #070b16 100%); box-shadow: inset 0 3px 10px rgba(255, 255, 255, 0.12), 0 22px 32px -14px rgba(37, 99, 255, 0.55); }
+.cc-dome .lens { position: absolute; left: 50%; top: 14px; width: 60px; height: 60px; margin-left: -30px; border-radius: 50%; background: radial-gradient(circle at 42% 38%, #8cc0ff 0, #2c64e8 26%, #0a1b5e 56%, #02040c 80%); box-shadow: 0 0 0 4px #0d1426, 0 0 0 6px #2a3856, 0 0 22px rgba(59, 130, 255, 0.7); animation: c-pan 6s ease-in-out infinite; }
+.cc-dome .lens i { position: absolute; left: 14px; top: 11px; width: 14px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, 0.7); transform: rotate(-24deg); }
+.cc-dome .shine { position: absolute; left: 12%; top: 4px; width: 34%; height: 60%; border-radius: 50%; background: linear-gradient(160deg, rgba(255, 255, 255, 0.35), transparent); }
+@keyframes c-pan { 0%, 100% { transform: translateX(-26px); } 50% { transform: translateX(26px); } }
+
+.cc-bullet { position: relative; display: block; width: 252px; height: 150px; }
+.cc-bullet .plate { right: 0; top: 4px; width: 58px; height: 130px; }
+.cc-bullet .plate i:first-child { top: 16px; } .cc-bullet .plate i:last-child { bottom: 16px; }
+.cc-bullet .arm { position: absolute; right: 40px; top: 56px; width: 60px; height: 22px; border-radius: 8px; background: linear-gradient(180deg, #f1f4fa, #d2dbea); }
+.cc-bullet .head { position: absolute; left: 0; top: 14px; width: 200px; height: 100px; transform-origin: 88% 56%; animation: c-swing 6s ease-in-out infinite; }
+.cc-bullet .hood { position: absolute; left: 6px; right: 8px; top: 0; height: 24px; border-radius: 30px 18px 6px 6px / 22px 14px 6px 6px; background: linear-gradient(180deg, #ffffff, #dfe6f2); box-shadow: 0 8px 14px -6px rgba(20, 30, 70, 0.35); z-index: 2; }
+.cc-bullet .tube { position: absolute; left: 14px; right: 0; top: 14px; height: 76px; border-radius: 42px 20px 20px 42px; background: linear-gradient(180deg, #ffffff 0%, #eef2f9 55%, #cfd8e8 100%); box-shadow: 0 22px 30px -14px rgba(20, 30, 70, 0.45); }
+.cc-bullet .front { position: absolute; left: 0; top: 14px; width: 82px; height: 82px; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle, #1b2235 0 56%, #0a0e18 57%); box-shadow: 0 0 0 5px #eef2f9, 0 0 0 6px #c3cde0, 0 14px 20px -8px rgba(20, 30, 70, 0.5); z-index: 3; }
+.cc-bullet .ir { position: absolute; inset: 0; }
+.cc-bullet .ir i { position: absolute; left: 50%; top: 50%; width: 5px; height: 5px; margin: -2.5px; border-radius: 50%; background: #a32323; box-shadow: 0 0 6px rgba(239, 68, 68, 0.8); }
+.cc-bullet .lens { position: relative; width: 38px; height: 38px; border-radius: 50%; background: radial-gradient(circle at 40% 36%, #9fcdff 0, #2c64e8 28%, #0a1b5e 58%, #02040c 82%); box-shadow: 0 0 16px rgba(59, 130, 255, 0.7); }
+.cc-bullet .lens i { position: absolute; left: 8px; top: 7px; width: 11px; height: 6px; border-radius: 50%; background: rgba(255, 255, 255, 0.7); transform: rotate(-24deg); }
+@keyframes c-swing { 0%, 100% { transform: rotate(-9deg); } 50% { transform: rotate(5deg); } }
+@media (prefers-reduced-motion: reduce) { .c-art *, .c-art *::before, .c-art *::after { animation-duration: 0.001s !important; animation-iteration-count: 1 !important; } }
+
+/* camera artwork from the design */
+.cc-img { display: block; height: auto; max-width: none; pointer-events: none; filter: drop-shadow(0 18px 22px rgba(37, 80, 180, 0.22)); }
+.cc-img.dome { width: 236px; transform-origin: 30% 40%; animation: cc-dome 7s ease-in-out infinite; }
+.cc-img.bullet { width: 262px; transform-origin: 85% 45%; animation: cc-bullet 6s ease-in-out infinite; }
+@keyframes cc-dome { 0%, 100% { transform: rotate(-1.5deg); } 50% { transform: rotate(1.5deg); } }
+@keyframes cc-bullet { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(2.5deg); } }
+.c-camwrap.l { left: 0; top: 14px; }
+.c-camwrap.r { right: 0; top: 24px; }
+.c-camwrap:hover .cc-img { filter: drop-shadow(0 22px 28px rgba(37, 99, 255, 0.4)); }
+
+/* drawn cameras (HQCameras.tsx) */
+.cc-svg { display: block; overflow: visible; pointer-events: none; }
+.cc-svg.dome { width: 236px; height: auto; transform-origin: 20% 40%; animation: cc-dome 7s ease-in-out infinite; }
+.cc-svg.bullet { width: 290px; height: auto; }
+.cc-pan { animation: cc-pan 6s ease-in-out infinite; }
+@keyframes cc-pan { 0%, 100% { transform: translateX(-16px); } 50% { transform: translateX(16px); } }
+.cc-swing { transform-box: view-box; transform-origin: 190px 134px; animation: cc-swing 6s ease-in-out infinite; }
+@keyframes cc-swing { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(3deg); } }
+.cc-ring { animation: cc-ring 2.8s ease-in-out infinite; }
+@keyframes cc-ring { 50% { opacity: 0.7; } }
+.cc-led { animation: cc-blink 1.6s steps(2, jump-none) infinite; }
+@keyframes cc-blink { 50% { opacity: 0.25; } }
+.cc-ir { animation: cc-ir 2.4s ease-in-out infinite; }
+@keyframes cc-ir { 50% { fill: #ef4444; } }
+.c-camwrap:hover .cc-svg { filter: drop-shadow(0 18px 26px rgba(37, 99, 255, 0.3)); }
+.c-camwrap:hover .cc-pan, .c-camwrap:hover .cc-swing { animation-duration: 2.4s; }
+
+/* breathing room between the monitor and the cameras */
+.c-monitor { width: 540px; margin-left: -270px; }
+.c-camwrap.l { left: -4px; top: 18px; }
+.c-camwrap.r { right: -34px; top: 34px; }
+.cc-svg.bullet { width: 262px; }
+.cc-svg.dome { width: 228px; }
+.c-alert { right: -6px; top: 318px; }
+.c-base { width: 600px; margin-left: -300px; }

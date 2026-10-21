@@ -208,9 +208,13 @@ const STATS = [
   { to: 99.9, suffix: '%', decimals: 1, label: 'Uptime', color: 'bg-[#0A1B44]' },
 ]
 
-export default function FeatureCards() {
+export default function FeatureCards({ flush = false }: { flush?: boolean }) {
+  // `flush`: sits straight under the steps (page tint #f5f6fa) instead of under the partners strip
+  const bg = flush
+    ? 'bg-[linear-gradient(180deg,#f5f6fa_0%,#f6f7fb_26%,#ffffff_66%,#f6f7fb_88%,#ffffff_100%)]'
+    : 'bg-[linear-gradient(180deg,#e3e4eb_0%,#e8eaef_8%,#eeeff4_18%,#f5f6fa_34%,#ffffff_68%,#f6f7fb_88%,#ffffff_100%)]'
   return (
-    <section className="relative overflow-hidden bg-[linear-gradient(180deg,#e3e4eb_0%,#e8eaef_8%,#eeeff4_18%,#f5f6fa_34%,#ffffff_68%,#f6f7fb_88%,#ffffff_100%)] px-6 pb-28 pt-24 font-sans">
+    <section className={`relative overflow-hidden ${bg} px-6 pb-28 pt-24 font-sans`}>
       {/* soft cloud glow behind the numbers */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-72 bg-[radial-gradient(ellipse_at_50%_70%,rgba(150,160,220,0.22),transparent_62%)] [mask-image:linear-gradient(180deg,#000_0%,#000_45%,transparent_100%)]" aria-hidden />
 
