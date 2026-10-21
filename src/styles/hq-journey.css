@@ -1,14 +1,16 @@
 /* CubeZix HQ tour (Home Nova hero): a pinned stage under the header, stations on one big ring */
 .hq { position: relative; font-family: Lato, sans-serif; background: #fafafa; }
 .hq-frame { --py: 80vh; --px: 0.5; --k: 1; --bgx: 0px; position: sticky; top: var(--hdr, 70px); height: calc(100vh - var(--hdr, 70px)); height: calc(100svh - var(--hdr, 70px)); overflow: hidden; background-color: #fafafa;
-  /* brand glow: blue in the middle of the stage, melting into white towards the edges (dots sit on top, drifting with the camera) */
+  /* texture: a fine film grain over faint arcs rising from below the stage (a horizon, for depth),
+     then the brand glow: blue in the middle of the stage, melting into white towards the edges */
   background-image:
-    radial-gradient(rgba(40, 70, 160, 0.2) 1.15px, transparent 1.4px),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.16 0 0 0 0 0.24 0 0 0 0 0.55 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E"),
+    repeating-radial-gradient(ellipse 120% 70% at 50% 118%, rgba(37, 99, 255, 0) 0, rgba(37, 99, 255, 0) 58px, rgba(37, 99, 255, 0.07) 59px, rgba(37, 99, 255, 0) 60px),
     radial-gradient(ellipse 66% 62% at 50% 48%, rgba(37, 99, 255, 0.34) 0%, rgba(24, 150, 245, 0.24) 34%, rgba(70, 60, 235, 0.1) 62%, rgba(255, 255, 255, 0) 100%),
     radial-gradient(ellipse 52% 40% at 50% 6%, rgba(18, 165, 245, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
-  background-size: 22px 22px, 100% 100%, 100% 100%;
-  background-position: var(--bgx) 11px, 0 0, 0 0;
-  background-repeat: repeat, no-repeat, no-repeat;
+  background-size: 180px 180px, 100% 100%, 100% 100%, 100% 100%;
+  background-position: 0 0, 0 0, 0 0, 0 0;
+  background-repeat: repeat, no-repeat, no-repeat, no-repeat;
   perspective: 1600px; perspective-origin: calc(var(--px) * 100%) var(--oy, 26%); }
 .hq-frame::after { content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 4; background: linear-gradient(90deg, #fafafa 0, rgba(250, 250, 250, 0) 4%, rgba(250, 250, 250, 0) 96%, #fafafa 100%); }
 .hq-frame::before { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 120px; z-index: 0; pointer-events: none; background: linear-gradient(180deg, rgba(250, 250, 250, 0), #fafafa 85%); }

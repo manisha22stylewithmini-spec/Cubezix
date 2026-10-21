@@ -18,8 +18,8 @@ export default function ArcHero({ eyebrow, note, eyebrowTo, title, accent, text,
   return (
     <section className="px-4 pt-4 sm:px-6 lg:px-12">
       <div className="relative mx-auto max-w-[1280px] overflow-hidden rounded-[32px] bg-[#fafafa] ring-1 ring-[#e6e9f0]">
-        <div className="pointer-events-none absolute inset-0 [background-image:radial-gradient(rgba(40,70,160,0.2)_1.1px,transparent_1.4px)] [background-position:11px_11px] [background-size:22px_22px]" aria-hidden />
         <div className="pointer-events-none absolute inset-0 [background-image:radial-gradient(ellipse_70%_75%_at_50%_62%,rgba(37,99,255,0.26),rgba(24,150,245,0.12)_45%,rgba(255,255,255,0)_78%)]" aria-hidden />
+        <div className="hero-tex pointer-events-none absolute inset-0" aria-hidden />
         <div className="relative px-6 pb-10 pt-12 sm:px-10 lg:px-14 lg:pt-14">
           <motion.div className="mx-auto flex max-w-[820px] flex-col items-center text-center" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease }}>
             <Eyebrow label={eyebrow} note={note} to={eyebrowTo} />

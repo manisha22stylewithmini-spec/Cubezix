@@ -11,8 +11,8 @@ export default function PageHero({ eyebrow, note, to, title, accent, text, actio
   return (
     <section className="px-4 pt-4 sm:px-6 lg:px-12">
       <div className="relative mx-auto max-w-[1280px] overflow-hidden rounded-[32px] bg-[#fafafa] ring-1 ring-[#e6e9f0] lg:min-h-[460px]">
-        <div className="pointer-events-none absolute inset-0 [background-image:radial-gradient(rgba(40,70,160,0.2)_1.1px,transparent_1.4px)] [background-position:11px_11px] [background-size:22px_22px]" aria-hidden />
         <div className="pointer-events-none absolute inset-0 [background-image:radial-gradient(ellipse_60%_80%_at_72%_50%,rgba(37,99,255,0.26),rgba(24,150,245,0.12)_45%,rgba(255,255,255,0)_75%)]" aria-hidden />
+        <div className="hero-tex pointer-events-none absolute inset-0" aria-hidden />
         <div className={`relative grid items-center gap-8 px-6 py-12 sm:px-10 lg:min-h-[460px] lg:px-14 lg:py-10 ${children ? 'lg:grid-cols-[1.02fr_0.98fr]' : ''}`}>
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease }}>
             <Eyebrow label={eyebrow} note={note} to={to} />

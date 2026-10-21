@@ -323,3 +323,12 @@ img { max-width: 100%; }
   .eb-sep, .eb-note { display: none; }
 }
 @media (prefers-reduced-motion: reduce) { .eb::after, .eb-dot::after { animation: none; } }
+
+/* hero texture (same as the home hero): fine film grain over faint arcs rising from below, for depth */
+.hero-tex {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.16 0 0 0 0 0.24 0 0 0 0 0.55 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E"),
+    repeating-radial-gradient(ellipse 120% 70% at 50% 118%, rgba(37, 99, 255, 0) 0, rgba(37, 99, 255, 0) 58px, rgba(37, 99, 255, 0.07) 59px, rgba(37, 99, 255, 0) 60px);
+  background-size: 180px 180px, 100% 100%;
+  background-repeat: repeat, no-repeat;
+}

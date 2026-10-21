@@ -21,8 +21,8 @@ export default function BlogPost() {
     <div className="bg-white font-sans">
       <section className="px-4 pt-4 sm:px-6 lg:px-12">
         <div className="relative mx-auto max-w-[1280px] overflow-hidden rounded-[32px] bg-[#fafafa] px-6 py-14 ring-1 ring-[#e6e9f0] sm:px-10 lg:px-14">
-          <div className="pointer-events-none absolute inset-0 [background-image:radial-gradient(rgba(40,70,160,0.2)_1.1px,transparent_1.4px)] [background-position:11px_11px] [background-size:22px_22px]" aria-hidden />
           <div className="pointer-events-none absolute inset-0 [background-image:radial-gradient(ellipse_60%_80%_at_50%_0%,rgba(37,99,255,0.22),rgba(255,255,255,0)_70%)]" aria-hidden />
+          <div className="hero-tex pointer-events-none absolute inset-0" aria-hidden />
           <div className="relative mx-auto max-w-[860px]">
             <Eyebrow label="Blogs" note={p.cat} to="/blog" />
             <h1 className="m-0 mt-5 text-[30px] font-extrabold leading-[1.12] tracking-[-0.03em] text-[#0b1220] sm:text-[40px]">{p.title}</h1>
